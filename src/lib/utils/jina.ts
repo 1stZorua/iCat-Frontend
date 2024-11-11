@@ -8,7 +8,6 @@ if (import.meta.env.MODE === 'development') {
 
 export async function getEmbeddingsFromJina(query: string) {
 	const url = 'https://api.jina.ai/v1/embeddings';
-	console.log(VITE_JINA_API_KEY);
 	const headers = {
 		'Content-Type': 'application/json',
 		Authorization: `Bearer ${VITE_JINA_API_KEY}`
