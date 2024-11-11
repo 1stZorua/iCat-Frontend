@@ -1,7 +1,34 @@
-<script>
+<script lang="ts">
+import { page } from '$app/stores';
+import { getFlash } from 'sveltekit-flash-message';
 import { ButtonSecondary } from '$components/shared/buttons';
 import { Avatar, Card } from '$components/shared/other';
 import { Text, TextBase, TextLarge, TextSmall } from '$components/shared/text';
+import type { CardProps } from '$components/shared/other/Card/variants';
+
+const flash = getFlash(page);
+const cards: { color: CardProps['color']; href: string; text: string }[] = [
+	{
+		color: 'primary',
+		href: 'chat',
+		text: 'Chat'
+	},
+	{
+		color: 'secondary',
+		href: 'scan',
+		text: 'Scan'
+	},
+	{
+		color: 'accent',
+		href: '#',
+		text: 'Cosmetics'
+	},
+	{
+		color: 'background',
+		href: '#',
+		text: 'Settings'
+	}
+];
 </script>
 
 <section class="wrapper m-auto flex h-full max-h-[100rem] max-w-[100rem] flex-col gap-4">
@@ -33,35 +60,26 @@ import { Text, TextBase, TextLarge, TextSmall } from '$components/shared/text';
 				alt="iCat"
 			/>
 		</Card>
-		<Card
-			className="flex-col justify-center items-center gap-2 p-14"
-			props={{ color: 'primary' }}
-			href="chat"
-		>
-			<img class="h-12" src="/images/chat.png" alt="chat" />
-			<TextBase>Chat</TextBase>
-		</Card>
-		<Card
-			className="flex-col justify-center items-center gap-2 p-14"
-			props={{ color: 'secondary' }}
-		>
-			<img class="h-12" src="/images/scan.png" alt="chat" />
-			<TextBase>Scan</TextBase>
-		</Card>
-		<Card
-			className="relative flex-col justify-center items-center gap-2 p-14"
-			props={{ color: 'accent' }}
-		>
-			<img class="absolute mb-7 h-16 w-[4.5rem]" src="/images/cosmetics.png" alt="chat" />
-			<div class="h-12"></div>
-			<TextBase>Cosmetics</TextBase>
-		</Card>
-		<Card
-			className="flex-col justify-center items-center gap-2 p-14"
-			props={{ color: 'background' }}
-		>
-			<img class="h-12" src="/images/settings.png" alt="chat" />
-			<TextBase>Settings</TextBase>
-		</Card>
+		{#each cards as { color, href, text }, index}
+			<Card
+				onclick={() => {
+					if (href != "#") return;
+					$flash = { type: 'info', message: 'This feature is still in the litter box, stay tuned!' }
+				}}
+				className="relative flex-col justify-center items-center gap-2 p-14"
+				props={{ color }}
+				href={href}
+			>
+				<img
+					class={index == 2 ? 'absolute mb-7 h-16 w-[4.5rem]' : 'h-12'}
+					src="/images/{text.toLowerCase()}.png"
+					alt="chat"
+				/>
+				{#if index == 2}
+					<div class="h-12"></div>
+				{/if}
+				<TextBase>{text}</TextBase>
+			</Card>
+		{/each}
 	</div>
 </section>
