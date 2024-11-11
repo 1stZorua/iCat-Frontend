@@ -6,6 +6,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"deploy": "npm run build && gh-pages -d build -t true",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --plugin prettier-plugin-svelte . --plugin prettier-plugin-tailwindcss . --write .",
@@ -42,6 +43,7 @@
 	"dependencies": {
 		"@iconify/json": "^2.2.270",
 		"@pinecone-database/pinecone": "^4.0.0",
+		"@sveltejs/adapter-vercel": "^5.4.7",
 		"clsx": "^2.1.1",
 		"iconify-icon": "^2.1.0",
 		"marked": "^15.0.0",
