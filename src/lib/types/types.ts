@@ -1,3 +1,5 @@
+export type FlashType = 'success' | 'info' | 'warning' | 'error';
+
 export interface Message {
 	sender: 'user' | 'bot';
 	text: string;
