@@ -1,4 +1,10 @@
-import { OPENAI_API_KEY } from '$env/static/private';
+let VITE_OPENAI_API_KEY: string;
+
+if (import.meta.env.MODE === 'development') {
+	VITE_OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+} else if (import.meta.env.MODE === 'production') {
+	VITE_OPENAI_API_KEY = process.env.OPENAI_API_KEY as string;
+}
 
 const markdownInstruction: string = `
 ### **Instruction for AI**
@@ -50,7 +56,7 @@ export async function sendToOpenAI(
 	const response = await fetch('https://api.openai.com/v1/chat/completions', {
 		method: 'POST',
 		headers: {
-			Authorization: `Bearer ${OPENAI_API_KEY}`,
+			Authorization: `Bearer ${VITE_OPENAI_API_KEY}`,
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({ model: 'gpt-4o-mini', messages })

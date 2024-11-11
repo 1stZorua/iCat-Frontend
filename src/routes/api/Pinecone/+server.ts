@@ -1,12 +1,19 @@
-import { PINECONE_API_KEY } from '$env/static/private';
 import { Pinecone } from '@pinecone-database/pinecone';
+
+let VITE_PINECONE_API_KEY: string;
+
+if (import.meta.env.MODE === 'development') {
+	VITE_PINECONE_API_KEY = import.meta.env.VITE_PINECONE_API_KEY;
+} else if (import.meta.env.MODE === 'production') {
+	VITE_PINECONE_API_KEY = process.env.VITE_PINECONE_API_KEY as string;
+}
 
 export const POST = async ({ request }) => {
 	const { queryEmbedding, topK } = await request.json();
 
 	try {
 		const pc = new Pinecone({
-			apiKey: PINECONE_API_KEY
+			apiKey: VITE_PINECONE_API_KEY
 		});
 
 		const index = pc.index('quickstart');

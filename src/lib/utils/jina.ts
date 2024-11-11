@@ -1,10 +1,17 @@
-import { JINA_API_KEY } from '$env/static/private';
+let VITE_JINA_API_KEY: string;
+
+if (import.meta.env.MODE === 'development') {
+	VITE_JINA_API_KEY = import.meta.env.VITE_JINA_API_KEY;
+} else if (import.meta.env.MODE === 'production') {
+	VITE_JINA_API_KEY = process.env.VITE_JINA_API_KEY as string;
+}
 
 export async function getEmbeddingsFromJina(query: string) {
 	const url = 'https://api.jina.ai/v1/embeddings';
+	console.log(VITE_JINA_API_KEY);
 	const headers = {
 		'Content-Type': 'application/json',
-		Authorization: `Bearer ${JINA_API_KEY}`
+		Authorization: `Bearer ${VITE_JINA_API_KEY}`
 	};
 
 	const data = {
