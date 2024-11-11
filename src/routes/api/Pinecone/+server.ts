@@ -5,7 +5,7 @@ let VITE_PINECONE_API_KEY: string;
 if (import.meta.env.MODE === 'development') {
 	VITE_PINECONE_API_KEY = import.meta.env.VITE_PINECONE_API_KEY;
 } else if (import.meta.env.MODE === 'production') {
-	VITE_PINECONE_API_KEY = process.env.VITE_PINECONE_API_KEY as string;
+	VITE_PINECONE_API_KEY = process.env.PINECONE_API_KEY as string;
 }
 
 export const POST = async ({ request }) => {
