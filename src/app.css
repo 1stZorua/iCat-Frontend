@@ -1,3 +1,126 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer base {
+
+	/* Baloo2 */
+	/* ExtraBold */
+	@font-face {
+		font-family: 'Baloo2';
+		src: url('/fonts/Baloo2/Baloo2-ExtraBold.ttf') format('truetype');
+		font-weight: 800;
+		font-style: normal;
+	}
+
+	/* Bold */
+	@font-face {
+		font-family: 'Baloo2';
+		src: url('/fonts/Baloo2/Baloo2-Bold.ttf') format('truetype');
+		font-weight: 700;
+		font-style: normal;
+	}
+
+	/* SemiBold */
+	@font-face {
+		font-family: 'Baloo2';
+		src: url('/fonts/Baloo2/Baloo2-SemiBold.ttf') format('truetype');
+		font-weight: 600;
+		font-style: normal;
+	}
+
+	/* Medium */
+	@font-face {
+		font-family: 'Baloo2';
+		src: url('/fonts/Baloo2/Baloo2-Medium.ttf') format('truetype');
+		font-weight: 500;
+		font-style: normal;
+	}
+
+	/* Regular */
+	@font-face {
+		font-family: 'Baloo2';
+		src: url('/fonts/Baloo2/Baloo2-Regular.ttf') format('truetype');
+		font-weight: 400;
+		font-style: normal;
+	}
+
+	/* Poppins */
+	/* Bold */
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+		font-weight: 700;
+		font-style: normal;
+	}
+
+	/* SemiBold */
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+		font-weight: 600;
+		font-style: normal;
+	}
+
+	/* Medium */
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+		font-weight: 500;
+		font-style: normal;
+	}
+
+	/* Regular */
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+		font-weight: 400;
+		font-style: normal;
+	}
+
+	/* Light */
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/fonts/Poppins/Poppins-Light.ttf') format('truetype');
+		font-weight: 300;
+		font-style: normal;
+	}
+
+	/* Palanquin */
+	/* Bold */
+	@font-face {
+		font-family: 'Palanquin';
+		src: url('/fonts/Palanquin/Palanquin-Bold.ttf') format('truetype');
+		font-weight: 700;
+		font-style: normal;
+	}
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	html,
+	body {
+		width: 100vw;
+		height: 100svh;
+		color: theme('colors.light.text.primary');
+		font-family: theme('fontFamily.poppins');
+		overflow-x: hidden;
+		line-height: 1.25;
+		/* overflow-y: hidden; */
+	}
+
+	img {
+		max-width: none;
+	}
+}
+
+@layer components {
+	.wrapper {
+		@apply p-6;
+	}
+}
