@@ -1,9 +1,10 @@
+import { fail } from '@sveltejs/kit';
+import { setFlash } from 'sveltekit-flash-message/server';
 import { getEmbeddingsFromJina, fetchPineconeResults, sendToOpenAI } from '$lib/utils';
 import type { VectorDBResult } from '$lib/types/types';
-import { fail } from '@sveltejs/kit';
 
 export const actions = {
-	chat: async ({ request, fetch }) => {
+	chat: async ({ request, fetch, cookies }) => {
 		const data = await request.formData();
 		const prompt = data.get('prompt') as string;
 
@@ -23,7 +24,10 @@ export const actions = {
 				}
 			};
 		} catch (error: unknown) {
-			// setFlash({ type: 'error', message: 'An error occured while processing your request.'}, cookies)
+			setFlash(
+				{ type: 'error', message: 'An error occured while processing your request.' },
+				cookies
+			);
 			console.error('Error processing request:', error);
 			return fail(500);
 		}
