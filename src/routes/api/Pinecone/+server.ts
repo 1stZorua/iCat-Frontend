@@ -25,7 +25,6 @@ export const POST = async ({ request }) => {
 
 		return new Response(JSON.stringify({ matches: result.matches }));
 	} catch (error: unknown) {
-		// setFlash({ type: 'error', message: 'An error occured while processing your request.'}, cookies)
 		console.error('Error processing request:', error);
 	}
 };
