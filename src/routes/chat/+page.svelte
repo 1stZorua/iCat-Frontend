@@ -6,7 +6,6 @@ import Avatar from '$components/shared/other/Avatar.svelte';
 import Input from '$components/shared/other/Input.svelte';
 import { TextBase, TextLarge } from '$components/shared/text';
 import type { Message } from '$lib/types/types';
-import { marked } from 'marked';
 import { untrack } from 'svelte';
 import { fade } from 'svelte/transition';
 
@@ -85,7 +84,7 @@ async function onSubmit() {
 				src="/images/icat.png"
 			></Avatar>
 			<TextBase className="font-normal p-3 rounded-md bg-light-background-secondary"
-				>{@html marked(messages[0].text as string)}</TextBase
+				>{messages[0].text}</TextBase
 			>
 		</div>
 		{#each messages.slice(1) as msg, index}
@@ -103,7 +102,7 @@ async function onSubmit() {
 				{:else}
 					<TextBase
 						className={`font-normal p-3 rounded-md ${isBot ? 'bg-light-background-secondary' : 'bg-light-cards-neutral-bg text-white'}`}
-						>{@html marked(msg.typedText as string)}</TextBase
+						>{msg.typedText}</TextBase
 					>
 				{/if}
 			</div>
