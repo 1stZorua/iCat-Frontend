@@ -1,10 +1,10 @@
-import { fail } from '@sveltejs/kit';
+import { fail, type RequestEvent } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { getEmbeddingsFromJina, fetchPineconeResults, sendToOpenAI } from '$lib/utils';
 import type { VectorDBResult } from '$lib/types/types';
 
 export const actions = {
-	chat: async ({ request, fetch, cookies }) => {
+	chat: async ({ request, fetch, cookies } : RequestEvent) => {
 		const data = await request.formData();
 		const prompt = data.get('prompt') as string;
 
