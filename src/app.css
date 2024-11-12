@@ -95,9 +95,9 @@
 		font-style: normal;
 	}
 
-	*,
-	*::before,
-	*::after {
+	*:not(.toaster) ,
+	*::before:not(.toaster) ,
+	*::after:not(.toaster) {
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
