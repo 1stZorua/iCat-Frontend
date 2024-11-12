@@ -1,7 +1,7 @@
 import { fail, type RequestEvent } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 
-const MINIMUM_DELAY_MS = 3000;
+const MINIMUM_DELAY_MS = 500;
 
 export const actions = {
     scan: async({ request, cookies }: RequestEvent) => {
