@@ -3,18 +3,6 @@ import type { Config } from 'tailwindcss';
 export default {
 	mode: 'jit',
 	content: ['./src/**/*.{html,js,svelte,ts}'],
-	safelist: [
-		'toast',
-		'toast-success',
-		'toast-error',
-		'toast-loading',
-		'toast-info',
-		'toast-bottom',
-		'toast-top',
-		'toast-center',
-		'toast-pending',
-		'toast-toast'
-	],
 	theme: {
 		extend: {
 			colors: {
