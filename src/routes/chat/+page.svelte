@@ -7,6 +7,7 @@ import { ButtonPrimary } from '$components/shared/buttons';
 import { Avatar, Icon, Input } from '$components/shared/other';
 import { TextBase } from '$components/shared/text';
 import type { Message } from '$lib/types/types';
+import { marked } from 'marked';
 
 let { form }: { form: { message: Message } } = $props();
 let elForm: HTMLFormElement;
@@ -16,6 +17,7 @@ let messages: Message[] = $state([
 		text: 'Hi, Emma. I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?'
 	}
 ]);
+let history: string = $derived(JSON.stringify(messages));
 let lastMessage: Message | null = null;
 let isProcessing: boolean = $state(false);
 
@@ -84,12 +86,13 @@ async function onSubmit() {
 			{/if}
 			<TextBase
 				className={`font-normal p-3 rounded-md ${isBot ? 'bg-light-background-secondary' : 'bg-light-cards-neutral-bg text-white'}`}
-				>{msg.typedText}</TextBase
+				>{@html marked.parse(msg?.typedText  ?? '' as string)}</TextBase
 			>
 		</div>
 	{/each}
 	<form
 		onsubmit={onSubmit}
+		enctype="multipart/form-data"
 		bind:this={elForm}
 		class="wrapper fixed bottom-0 left-0 flex w-full justify-center pb-4"
 		method="POST"
@@ -104,5 +107,6 @@ async function onSubmit() {
 				></Icon>
 			</ButtonPrimary>
 		</Input>
+		<input type="hidden" name="history" value={history} />
 	</form>
 </PageLayout>
