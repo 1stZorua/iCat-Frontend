@@ -46,6 +46,7 @@
 		"@sveltejs/adapter-vercel": "^5.4.7",
 		"clsx": "^2.1.1",
 		"iconify-icon": "^2.1.0",
+		"marked": "^15.0.0",
 		"svelte-sonner": "^0.3.28",
 		"tailwind-merge": "^2.5.4",
 		"tailwind-variants": "^0.2.1"
