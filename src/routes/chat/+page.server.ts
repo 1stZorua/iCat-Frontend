@@ -1,12 +1,13 @@
 import { fail, type RequestEvent } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { getEmbeddingsFromJina, fetchPineconeResults, sendToOpenAI } from '$lib/utils';
-import type { VectorDBResult } from '$lib/types/types';
+import type { Message, VectorDBResult } from '$lib/types/types';
 
 export const actions = {
 	chat: async ({ request, fetch, cookies } : RequestEvent) => {
 		const data = await request.formData();
 		const prompt = data.get('prompt') as string;
+		const history = JSON.parse(data.get('history') as string) as Message[];
 
 		try {
 			const queryEmbedding = await getEmbeddingsFromJina(prompt);
@@ -14,7 +15,13 @@ export const actions = {
 			const contextTexts = vectorDBResults.matches.map(
 				(match: VectorDBResult) => match.metadata.text
 			);
-			const responseMessage = await sendToOpenAI(prompt, contextTexts);
+
+			const fullContext = [
+				...history.map((msg) => msg.text),
+				...contextTexts,
+			];
+
+			const responseMessage = await sendToOpenAI(prompt, fullContext);
 
 			return {
 				success: true,
