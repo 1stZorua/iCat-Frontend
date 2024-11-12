@@ -14,13 +14,10 @@ let exhibition: string = $derived(form?.exhibition);
 
 async function startCamera() {
     try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const backCamera = devices
-            .filter(device => device.kind === 'videoinput')
-            .find(device => device.label.toLowerCase().includes('back') || device.label.toLowerCase().includes('environment'));
-
         const constraints = {
-            video: backCamera ? { deviceId: { exact: backCamera.deviceId } } : true
+            video: {
+                facingMode: { exact: "environment" }
+            }
         };
 
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -30,7 +27,6 @@ async function startCamera() {
         console.error("Error accessing camera: ", error);
     }
 }
-
 async function captureScanArea() {
     const { left, top, width, height } = elScanArea.getBoundingClientRect();
     const canvas = document.createElement('canvas');
