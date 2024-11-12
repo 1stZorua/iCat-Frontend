@@ -25,6 +25,6 @@ $effect(() => {
 let { children }: { children?: Snippet } = $props();
 </script>
 
-<Toaster position="top-center" richColors toastOptions={{}} />
+<Toaster position="top-center" richColors />
 
 {@render children?.()}
