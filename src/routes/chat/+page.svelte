@@ -63,7 +63,7 @@ async function onSubmit() {
 }
 </script>
 
-<PageLayout page="Chat">
+<PageLayout className="mb-[5.5rem]" page="Chat">
 	<div class={`flex gap-2`}>
 		<Avatar
 			className="flex-shrink-0 justify-center items-end bg-light-cards-neutral-bg"
@@ -74,6 +74,7 @@ async function onSubmit() {
 			>{messages[0].text}</TextBase
 		>
 	</div>
+	
 	{#each messages.slice(1) as msg}
 		{@const isBot = msg.sender == 'bot'}
 		<div in:fade class={`flex gap-2 ${isBot ? '' : 'justify-end'}`}>
