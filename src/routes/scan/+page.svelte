@@ -14,8 +14,16 @@ let exhibition: string = $derived(form?.exhibition);
 
 async function startCamera() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const backCamera = devices
+            .filter(device => device.kind === 'videoinput')
+            .find(device => device.label.toLowerCase().includes('back') || device.label.toLowerCase().includes('environment'));
 
+        const constraints = {
+            video: backCamera ? { deviceId: { exact: backCamera.deviceId } } : true
+        };
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         elVideo.srcObject = stream;
         elVideo.play();
     } catch (error) {
