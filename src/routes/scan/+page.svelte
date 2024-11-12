@@ -56,7 +56,7 @@ $effect(() => {
 </script>
 
 <PageLayout page="Scan">
-    <video bind:this={elVideo} class="w-full h-full absolute object-cover top-0 left-0 blur-3xl -z-10" autoplay playsinline muted></video>
+    <video bind:this={elVideo} class="w-full h-full absolute object-cover top-0 left-0 -z-10" autoplay playsinline muted></video>
     <form class="h-full" action="?/scan" method="post" enctype="multipart/form-data" use:enhance>
         <input bind:this={elInput} type="file" name="image" accept="image/*" value={imageData} required hidden />
         <button 
