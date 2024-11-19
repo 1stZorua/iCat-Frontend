@@ -9,17 +9,30 @@ import { TextBase } from '$components/shared/text';
 import type { Message } from '$lib/types/types';
 import { marked } from 'marked';
 
-let { form }: { form: { message: Message } } = $props();
+let { form }: { form: { message: Message, context: Array<string[]> } } = $props();
 let elForm: HTMLFormElement;
 let messages: Message[] = $state([
 	{
-		sender: 'bot',
-		text: 'Hi, Emma. I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?'
+		role: 'assistant',
+		context: 'Hi, Emma. I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?'
 	}
 ]);
 let history: string = $derived(JSON.stringify(messages));
+let context: string = $derived(JSON.stringify(form?.context || []));
 let lastMessage: Message | null = null;
 let isProcessing: boolean = $state(false);
+
+// $effect(() => {
+// 	if (form?.context) {
+// 		const lastUserMessageIndex = messages.findIndex((msg) => msg.role === 'user');
+// 		if (lastUserMessageIndex !== -1) {
+// 			const question = messages[lastUserMessageIndex].context;
+// 			console.log("before: ", history.length);
+// 			messages[lastUserMessageIndex].context = `Context:\n${form.context.join('\n\n')}\n\nQuestion: ${question}`;
+// 			console.log("After: ", history.length);
+// 		}
+// 	}
+// });
 
 $effect(() => {
 	if (form?.message && form.message !== lastMessage) {
@@ -37,13 +50,13 @@ $effect(() => {
 async function typeMessage(index: number) {
 	const message = messages[index];
 
-	if (message.sender == 'user') {
-		message.typedText = message.text;
+	if (message.role == 'user') {
+		message.typedText = message.context;
 		return;
 	}
 
-	for (let i = 0; i <= message.text.length; i++) {
-		message.typedText = message.text.slice(0, i);
+	for (let i = 0; i <= message.context.length; i++) {
+		message.typedText = message.context.slice(0, i);
 		await new Promise((resolve) => setTimeout(resolve, 20));
 	}
 
@@ -55,8 +68,8 @@ async function onSubmit() {
 
 	if (!elPrompt || isProcessing) return;
 
-	const userMessage: Message = { sender: 'user', text: elPrompt.value as string };
-	elPrompt.value = '';
+	const userMessage: Message = { role: 'user', context: elPrompt.value as string };
+	// elPrompt.value = '';
 
 	messages = [...messages, userMessage];
 	isProcessing = true;
@@ -71,12 +84,12 @@ async function onSubmit() {
 			src="/images/icat.png"
 		></Avatar>
 		<TextBase className="font-normal p-3 rounded-md bg-light-background-secondary"
-			>{messages[0].text}</TextBase
+			>{messages[0].context}</TextBase
 		>
 	</div>
 	
 	{#each messages.slice(1) as msg}
-		{@const isBot = msg.sender == 'bot'}
+		{@const isBot = msg.role == 'assistant'}
 		<div in:fade class={`flex gap-2 ${isBot ? '' : 'justify-end'}`}>
 			{#if isBot}
 				<Avatar
@@ -109,5 +122,6 @@ async function onSubmit() {
 			</ButtonPrimary>
 		</Input>
 		<input type="hidden" name="history" value={history} />
+		<input type="hidden" name="context" value={context} />
 	</form>
 </PageLayout>
