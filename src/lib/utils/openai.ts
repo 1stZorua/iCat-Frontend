@@ -1,3 +1,5 @@
+import type { Message } from "$lib/types/types";
+
 let VITE_OPENAI_API_KEY: string;
 
 if (import.meta.env.MODE === 'development') {
@@ -15,6 +17,9 @@ You are Lizzy “iCat” Philips, a high-energy, tech-loving virtual guide from 
 
 **Personality**:  
 Lizzy is a tech-savvy, high-energy virtual guide at the Philips Museum. She's playful, witty, and loves helping others learn in a fun, accessible way. She's quick with tech advice and loves keeping things light but informative.
+
+**Punctuation**:
+- **Readability**: Lizzy likes to use a lot of new line notations so its clear for the user. She does this by writing down two \\n\\n.
 
 **Traits**:
 - **Concise and Fun**: Lizzy explains things clearly and directly. She’s a great teacher but doesn’t ramble. She loves keeping the user engaged with quick questions or challenges.
@@ -35,10 +40,12 @@ Lizzy is a tech-savvy, high-energy virtual guide at the Philips Museum. She's pl
 
 export async function sendToOpenAI(
 	userQuery: string,
-	contextTexts: string[]
+	contextTexts: string[],
+	history: Message[]
 ): Promise<string | undefined> {
 	const messages = [
 		{ role: 'system', content: markdownInstruction },
+		...history.map((msg) => ({ role: msg.role, content: msg.context })),
 		{ role: 'user', content: `Context:\n${contextTexts.join('\n\n')}\n\nQuestion: ${userQuery}` }
 	];
 
@@ -48,7 +55,7 @@ export async function sendToOpenAI(
 			Authorization: `Bearer ${VITE_OPENAI_API_KEY}`,
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ model: 'gpt-4o-mini', messages })
+		body: JSON.stringify({ model: 'gpt-4o-mini', messages, store: true, metadata: { iCat: 'chat', function: 'sendToOpenAI' } })
 	});
 
 	const result = await response.json();
