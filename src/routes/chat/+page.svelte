@@ -22,18 +22,6 @@ let context: string = $derived(JSON.stringify(form?.context || []));
 let lastMessage: Message | null = null;
 let isProcessing: boolean = $state(false);
 
-// $effect(() => {
-// 	if (form?.context) {
-// 		const lastUserMessageIndex = messages.findIndex((msg) => msg.role === 'user');
-// 		if (lastUserMessageIndex !== -1) {
-// 			const question = messages[lastUserMessageIndex].context;
-// 			console.log("before: ", history.length);
-// 			messages[lastUserMessageIndex].context = `Context:\n${form.context.join('\n\n')}\n\nQuestion: ${question}`;
-// 			console.log("After: ", history.length);
-// 		}
-// 	}
-// });
-
 $effect(() => {
 	if (form?.message && form.message !== lastMessage) {
 		messages = [...messages, form.message];
