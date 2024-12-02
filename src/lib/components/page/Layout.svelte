@@ -8,21 +8,32 @@ import { TextLarge } from '$components/shared/text';
 
 let {
 	className,
+	header = { state: true, color: 'primary' },
 	href = '/',
 	page = '',
 	children
-}: { className?: ClassType; href?: string; page?: string; children?: Snippet } = $props();
+}: {
+	parentClassName?: ClassType;
+	className?: ClassType;
+	header?: { state?: boolean; color?: 'primary' | 'accent' };
+	href?: string;
+	page?: string;
+	children?: Snippet;
+} = $props();
 </script>
 
 <section class="wrapper relative flex h-full w-full flex-col overflow-scroll">
-	<div class="wrapper fixed left-0 top-0 flex w-full items-center">
+	<div
+		class="wrapper fixed left-0 top-0 z-10 flex w-full items-center {header.state || header.state === undefined ? '' : 'invisible'}"
+	>
 		<ButtonAction href={href} className="absolute top-1/2 -translate-y-1/2">
 			<Icon icon="lucide:chevron-left"></Icon>
 		</ButtonAction>
-		<TextLarge className="mx-auto h-12 flex items-center">{page}</TextLarge>
+		<TextLarge className={`mx-auto h-12 flex items-center text-light-text-${header.color}`}
+			>{page}</TextLarge
+		>
 	</div>
-	<div class={cn('mt-[4.5rem] h-full flex flex-col gap-5', className)}>
+	<div class={cn('mt-[4.5rem] flex h-full flex-col gap-5', className)}>
 		{@render children?.()}
 	</div>
 </section>
-	
