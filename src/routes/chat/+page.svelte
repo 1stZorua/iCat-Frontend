@@ -1,6 +1,7 @@
 <script lang="ts">
 import { untrack } from 'svelte';
 import { enhance } from '$app/forms';
+import { page } from '$app/stores';
 import { fade } from 'svelte/transition';
 import { PageLayout } from '$components/page';
 import { ButtonPrimary } from '$components/shared/buttons';
@@ -9,16 +10,16 @@ import { TextBase } from '$components/shared/text';
 import type { Message } from '$lib/types/types';
 import { marked } from 'marked';
 
-let { form }: { form: { message: Message, context: Array<string[]> } } = $props();
+let { form }: { form: { message: Message } } = $props();
 let elForm: HTMLFormElement;
 let messages: Message[] = $state([
 	{
 		role: 'assistant',
-		context: 'Hi, Emma. I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?'
+		context:
+			'Hi, Emma. I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?'
 	}
 ]);
 let history: string = $derived(JSON.stringify(messages));
-let context: string = $derived(JSON.stringify(form?.context || []));
 let lastMessage: Message | null = null;
 let isProcessing: boolean = $state(false);
 
@@ -56,16 +57,22 @@ async function onSubmit() {
 
 	if (!elPrompt || isProcessing) return;
 
-	const userMessage: Message = { role: 'user', context: elPrompt.value as string };
-	// elPrompt.value = '';
+	const value = elPrompt.value as string;
+	const userMessage: Message = { role: 'user', context: value };
+	elPrompt.value = '';
 
 	messages = [...messages, userMessage];
 	isProcessing = true;
 }
+$inspect($page.data.user?.cosmetics.selectedBackground);
 </script>
 
-<PageLayout className="mb-[5.5rem]" page="Chat">
-	<div class={`flex gap-2`}>
+<PageLayout
+	className={`mb-[5.5rem] h-max text-light-text-primary before:fixed before:w-full before:h-full before:inset-0 before:-z-10 before:bg-[url('/images/cosmetics/background_${$page.data.user?.cosmetics.selectedBackground}.svg')] before:bg-no-repeat before:bg-cover`}
+	header={{ color: 'accent' }}
+	page="Chat"
+>
+	<div class="flex gap-2 drop-shadow-sm">
 		<Avatar
 			className="flex-shrink-0 justify-center items-end bg-light-cards-neutral-bg"
 			imageClassName="h-5/6"
@@ -75,7 +82,7 @@ async function onSubmit() {
 			>{messages[0].context}</TextBase
 		>
 	</div>
-	
+
 	{#each messages.slice(1) as msg}
 		{@const isBot = msg.role == 'assistant'}
 		<div in:fade class={`flex gap-2 ${isBot ? '' : 'justify-end'}`}>
@@ -88,7 +95,7 @@ async function onSubmit() {
 			{/if}
 			<TextBase
 				className={`font-normal p-3 rounded-md ${isBot ? 'bg-light-background-secondary' : 'bg-light-cards-neutral-bg text-white'}`}
-				>{@html marked.parse(msg?.typedText  ?? '' as string)}</TextBase
+				>{@html marked.parse(msg?.typedText?.replace(/\n/g, '<br>') ?? '' as string)}</TextBase
 			>
 		</div>
 	{/each}
@@ -110,6 +117,5 @@ async function onSubmit() {
 			</ButtonPrimary>
 		</Input>
 		<input type="hidden" name="history" value={history} />
-		<input type="hidden" name="context" value={context} />
 	</form>
 </PageLayout>
