@@ -50,7 +50,8 @@ export default {
 					},
 					background: {
 						primary: '#FFFFFF',
-						secondary: '#F3F7FA'
+						secondary: '#F3F7FA',
+						tertiary: '#000000'
 					},
 					gradient: {
 						from: '#C69DCD',
@@ -64,12 +65,13 @@ export default {
 				palanquin: ['Palanquin', 'sans-serif']
 			},
 			borderRadius: {
+				sm: '0.3125rem',
 				md: '0.625rem',
 				lg: '1.25rem',
 				xl: '1.875rem'
 			},
 			boxShadow: {
-				md: '0 0 8px rgba(0, 0, 0, 0.05), 0 0 8px rgba(0, 0, 0, 0.05), 0 0 8px rgba(0, 0, 0, 0.05)'
+				md: '0px 0px 5px 0px rgba(0, 0, 0, 0.1), 0px 0px 1px 0px rgba(0, 0, 0, 0.1)'
 			}
 		},
 		fontSize: {
