@@ -20,12 +20,12 @@ const cards: { color: CardProps['color']; href: string; text: string }[] = [
 	},
 	{
 		color: 'accent',
-		href: '#',
+		href: 'cosmetics',
 		text: 'Cosmetics'
 	},
 	{
 		color: 'background',
-		href: '#',
+		href: 'introduction',
 		text: 'Settings'
 	}
 ];
