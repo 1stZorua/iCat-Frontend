@@ -7,10 +7,11 @@ import { Icon } from '$components/shared/other';
 import { TextLarge } from '$components/shared/text';
 
 let {
+	parentClassName,
 	className,
 	header = { state: true, color: 'primary' },
 	href = '/',
-	page = '',
+	page,
 	children
 }: {
 	parentClassName?: ClassType;
@@ -22,7 +23,7 @@ let {
 } = $props();
 </script>
 
-<section class="wrapper relative flex h-full w-full flex-col overflow-scroll">
+<section class={cn("wrapper relative flex h-max w-full flex-col", parentClassName)}>
 	<div
 		class="wrapper fixed left-0 top-0 z-10 flex w-full items-center {header.state || header.state === undefined ? '' : 'invisible'}"
 	>
