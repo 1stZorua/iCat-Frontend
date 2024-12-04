@@ -4,33 +4,40 @@ import { setFlash } from 'sveltekit-flash-message/server';
 const MINIMUM_DELAY_MS = 100;
 
 export const actions = {
-    scan: async({ request, cookies }: RequestEvent) => {
-        const data = await request.formData();
-        const startTime = Date.now();
+	scan: async ({ request, cookies }: RequestEvent) => {
+		const data = await request.formData();
+		const imageFile = data.get('image') as File;
 
-        try {
-            const response = await fetch('https://klp4cbg3-5000.euw.devtunnels.ms/predict', {
-                method: 'POST',
-                body: data
-            });
+		if (imageFile.size === 0 || !imageFile.name) return fail(400);
 
-            if (!response.ok) {
-                setFlash({ type: 'error', message: 'An error occured while making request.'}, cookies)
-                return fail(400);
-            }
+		const startTime = Date.now();
 
-            const result = await response.json();  
-            const elapsedTime = Date.now() - startTime;
+		try {
+			const response = await fetch('https://klp4cbg3-5000.euw.devtunnels.ms/predict', {
+				method: 'POST',
+				body: data
+			});
 
-            if (elapsedTime < MINIMUM_DELAY_MS) {
-                await new Promise(resolve => setTimeout(resolve, MINIMUM_DELAY_MS - elapsedTime));
-            }
+			if (!response.ok) {
+				setFlash({ type: 'error', message: 'An error occured while making request.' }, cookies);
+				return fail(400);
+			}
 
-            return { success: true, exhibition: result['predicted_exhibition'] }
-        } catch (error: unknown) {
-            setFlash({ type: 'error', message: 'An error occured while processing your request.'}, cookies)
-            console.error(error);
-            return fail(500);
-        }
-    }
-}
+			const result = await response.json();
+			const elapsedTime = Date.now() - startTime;
+
+			if (elapsedTime < MINIMUM_DELAY_MS) {
+				await new Promise((resolve) => setTimeout(resolve, MINIMUM_DELAY_MS - elapsedTime));
+			}
+
+			return { success: true, exhibition: result['predicted_exhibition'] };
+		} catch (error: unknown) {
+			setFlash(
+				{ type: 'error', message: 'An error occured while processing your request.' },
+				cookies
+			);
+			console.error(error);
+			return fail(500);
+		}
+	}
+};
