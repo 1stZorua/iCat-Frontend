@@ -25,7 +25,7 @@ const cards: { color: CardProps['color']; href: string; text: string }[] = [
 	},
 	{
 		color: 'background',
-		href: 'introduction',
+		href: 'profile',
 		text: 'Settings'
 	}
 ];
@@ -64,19 +64,19 @@ const cards: { color: CardProps['color']; href: string; text: string }[] = [
 			<Card
 				onclick={() => {
 					if (href != "#") return;
-					$flash = { type: 'info', message: 'This feature is still in the litter box, stay tuned!' }
+					$flash = { type: 'info', message: 'This page is currently under maintenance.' }
 				}}
-				className="relative flex-col justify-center items-center gap-2 p-14"
+				className="relative flex-col justify-center items-center gap-2 p-8"
 				props={{ color }}
 				href={href}
 			>
 				<img
-					class={index == 2 ? 'absolute mb-7 h-16 w-[4.5rem]' : 'h-12'}
+					class={index == 2 ? 'absolute mb-7 h-[15vw] max-h-16 w-[14vw] max-w-[4.5rem]' : 'h-[12vw] max-h-12'}
 					src="/images/{text.toLowerCase()}.png"
 					alt="chat"
 				/>
 				{#if index == 2}
-					<div class="h-12"></div>
+					<div class="h-[2.75rem]"></div>
 				{/if}
 				<TextBase>{text}</TextBase>
 			</Card>
