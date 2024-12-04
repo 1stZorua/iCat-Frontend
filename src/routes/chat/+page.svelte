@@ -64,14 +64,18 @@ async function onSubmit() {
 	messages = [...messages, userMessage];
 	isProcessing = true;
 }
-$inspect($page.data.user?.cosmetics.selectedBackground);
 </script>
 
 <PageLayout
-	className={`mb-[5.5rem] h-max text-light-text-primary before:fixed before:w-full before:h-full before:inset-0 before:-z-10 before:bg-[url('/images/cosmetics/background_${$page.data.user?.cosmetics.selectedBackground}.svg')] before:bg-no-repeat before:bg-cover`}
+	className="mb-[5.5rem] text-light-text-primary"
 	header={{ color: 'accent' }}
 	page="Chat"
 >
+	<img
+		class="fixed inset-0 -z-10 h-full w-full object-cover"
+		src={`/images/cosmetics/background_${$page.data.user?.cosmetics.selectedBackground}.svg`}
+		alt="background"
+	/>
 	<div class="flex gap-2 drop-shadow-sm">
 		<Avatar
 			className="flex-shrink-0 justify-center items-end bg-light-cards-neutral-bg"
