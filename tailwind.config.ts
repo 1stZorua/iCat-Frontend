@@ -52,10 +52,6 @@ export default {
 						primary: '#FFFFFF',
 						secondary: '#F3F7FA',
 						tertiary: '#000000'
-					},
-					gradient: {
-						from: '#C69DCD',
-						to: '#9192FE'
 					}
 				}
 			},
