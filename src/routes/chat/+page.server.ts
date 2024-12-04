@@ -4,7 +4,7 @@ import { getEmbeddingsFromJina, fetchPineconeResults, sendToOpenAI } from '$lib/
 import type { Message, VectorDBResult } from '$lib/types/types';
 
 export const actions = {
-	chat: async ({ request, fetch, cookies }: RequestEvent) => {
+	chat: async ({ request, fetch, cookies, locals }: RequestEvent) => {
 		const data = await request.formData();
 		const prompt = data.get('prompt') as string;
 		const history = JSON.parse(data.get('history') as string) as Message[];
@@ -16,7 +16,12 @@ export const actions = {
 				(match: VectorDBResult) => match.metadata.text
 			);
 
-			const responseMessage = await sendToOpenAI(prompt, contextTexts, history);
+			const userInstruction = `
+			### **AI Instruction**
+
+			Adjust your tone and language complexity to ensure the user, who is ${locals.user.age} years old, can understand your responses clearly and easily.
+			`;
+			const responseMessage = await sendToOpenAI(prompt, contextTexts, history, userInstruction);
 
 			return {
 				success: true,
