@@ -1,0 +1,55 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"index_greeting_heading": "Hallo, {name}!",
+	"index_greeting_subheading": "Leuk om je te zien!",
+	"index_hero_heading": "Heb je vragen?",
+	"index_hero_subheading": "Misschien kan ik je helpen!",
+	"index_hero_button": "Start een chat",
+
+	"introduction_heading": "Interactieve Ervaring",
+	"introduction_description": "Stel vragen, scan tentoonstellingen en ontdek de verhalen achter elke presentatie.",
+	"introduction_button": "Start Nu",
+
+	"create_name": "Profiel Aanmaken",
+	"create_heading": "Je Leeftijd",
+	"create_button": "Volgende",
+
+	"chat_name": "Chat",
+	"chat_message": "Hallo Emma, ik ben iCat en ik kan je helpen met vragen over je museumbezoek. Is er iets wat ik voor je kan doen?",
+	"chat_placeholder": "Typ iets...",
+
+	"scan_name": "Scan",
+	"scan_text": "Tik om de camera in te schakelen",
+	"scan_exhibition": "Philips Museum Tentoonstelling",
+
+	"cosmetics_name": "Cosmetica",
+	"cosmetics_user": "Gebruiker",
+	"cosmetics_icat": "iCat",
+	"cosmetics_href": "achtergrond",
+	"cosmetics_heading": "Achtergrond",
+	"cosmetics_description": "Pas je achtergrond aan",
+	"cosmetics_selected": "Actief",
+	"cosmetics_owned": "In Bezit",
+
+	"profile_name": "Instellingen",
+	"profile_page": "Profiel",
+	"profile_join_date": "Lid sinds Januari 2025",
+
+	"profile_correct_answers": "Juiste antwoorden",
+	"profile_total_coins": "Totaal aanal munten",
+
+	"profile_personal": "Persoonlijk",
+	"profile_general": "Algemeen",
+	"profile_help": "Help",
+	"profile_contact": "Contact",
+	"profile_logout": "Uitloggen",
+
+	"profile_language_name": "Taal",
+	"profile_language_description": "Kies de taal die de app gebruikt.",
+	"profile_language_dutch": "Nederlands",
+	"profile_language_english": "Engels",
+
+	"error_accessing_camera": "Kan de camera niet openen.",
+	"error_processing_request": "Er is een fout opgetreden bij het verwerken van je verzoek.",
+	"error_maintenance": "Deze pagina is momenteel in onderhoud."
+}
