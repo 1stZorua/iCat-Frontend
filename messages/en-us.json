@@ -1,0 +1,55 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"index_greeting_heading": "Hello, {name}!",
+	"index_greeting_subheading": "Good to see you!",
+	"index_hero_heading": "Got Questions?",
+	"index_hero_subheading": "Purr-haps I can help!",
+	"index_hero_button": "Start a chat",
+
+	"introduction_heading": "Interactive Experience",
+	"introduction_description": "Ask questions, scan exhibits, and discover stories behind every display.",
+	"introduction_button": "Get Started",
+
+	"create_name": "Create Profile",
+	"create_heading": "Your Age",
+	"create_button": "Next",
+
+	"chat_name": "Chat",
+	"chat_message": "Hi Emma, I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?",
+	"chat_placeholder": "Type something...",
+
+	"scan_name": "Scan",
+	"scan_text": "Click to enable camera",
+	"scan_exhibition": "Philips Museum Exhibition",
+
+	"cosmetics_name": "Cosmetics",
+	"cosmetics_user": "User",
+	"cosmetics_icat": "iCat",
+	"cosmetics_href": "background",
+	"cosmetics_heading": "Background",
+	"cosmetics_description": "Customize your background",
+	"cosmetics_selected": "Selected",
+	"cosmetics_owned": "Owned",
+
+	"profile_name": "Settings",
+	"profile_page": "Profile",
+	"profile_join_date": "Member since January 2025",
+
+	"profile_correct_answers": "Correct Answers",
+	"profile_total_coins": "Total Coins",
+
+	"profile_personal": "Personal",
+	"profile_general": "General",
+	"profile_help": "Help",
+	"profile_contact": "Contact",
+	"profile_logout": "Logout",
+
+	"profile_language_name": "Language",
+	"profile_language_description": "Choose the language the app uses.",
+	"profile_language_dutch": "Dutch",
+	"profile_language_english": "English",
+
+	"error_accessing_camera": "Unable to access the camera.",
+	"error_processing_request": "An error occured while processing your request.",
+	"error_maintenance": "This page is currently under maintenance."
+}
