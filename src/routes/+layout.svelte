@@ -1,4 +1,6 @@
 <script lang="ts">
+import { ParaglideJS } from '@inlang/paraglide-sveltekit';
+import { i18n } from '$lib/i18n';
 import { page } from '$app/stores';
 import type { Snippet } from 'svelte';
 import type { FlashType } from '$lib/types/types';
@@ -25,6 +27,8 @@ $effect(() => {
 let { children }: { children?: Snippet } = $props();
 </script>
 
-<Toaster position="top-center" richColors />
+<ParaglideJS i18n={i18n}>
+	<Toaster position="top-center" richColors />
 
-{@render children?.()}
+	{@render children?.()}
+</ParaglideJS>
