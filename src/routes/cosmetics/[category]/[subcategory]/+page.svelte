@@ -7,11 +7,12 @@ import { Icon } from '$components/shared/other';
 import { TextBase } from '$components/shared/text';
 import { fade } from 'svelte/transition';
 import { enhance } from '$app/forms';
+import * as m from '$lib/paraglide/messages';
 
 let selectedIndex = $state($page.data.user?.cosmetics.selectedBackground);
 </script>
 
-<PageLayout className="" href="/cosmetics" page={toProperCase(Object.values($page.params))}>
+<PageLayout href="/cosmetics" page={toProperCase(Object.values($page.params))}>
 	<form
 		class="grid h-max grid-cols-3 justify-items-center gap-10"
 		method="post"
@@ -20,7 +21,7 @@ let selectedIndex = $state($page.data.user?.cosmetics.selectedBackground);
 	>
 		<input type="hidden" name="id" value={selectedIndex} />
 		{#each Array(5) as _, index}
-			{@const isSelected = selectedIndex == index}
+			{@const isSelected = selectedIndex === index}
 			<ButtonText
 				onclick={() => selectedIndex = index}
 				className="flex-col items-center gap-4 max-w-max"
@@ -34,7 +35,7 @@ let selectedIndex = $state($page.data.user?.cosmetics.selectedBackground);
 					{#if isSelected}
 						<div
 							transition:fade
-							class="bg-light-background-tertiary absolute inset-0 h-full w-full bg-opacity-50"
+							class="absolute inset-0 h-full w-full bg-light-background-tertiary bg-opacity-50"
 						>
 							<Icon
 								className="flex items-center justify-center h-full text-light-text-accent text-xl"
@@ -43,7 +44,7 @@ let selectedIndex = $state($page.data.user?.cosmetics.selectedBackground);
 						</div>
 					{/if}
 				</div>
-				<TextBase>{isSelected? 'Selected' : 'Owned'}</TextBase>
+				<TextBase>{isSelected? m.cosmetics_selected() : m.cosmetics_owned()}</TextBase>
 			</ButtonText>
 		{/each}
 	</form>

@@ -5,28 +5,29 @@ import { ButtonSecondary } from '$components/shared/buttons';
 import { Avatar, Card } from '$components/shared/other';
 import { Text, TextBase, TextLarge, TextSmall } from '$components/shared/text';
 import type { CardProps } from '$components/shared/other/Card/variants';
+import * as m from '$lib/paraglide/messages';
 
 const flash = getFlash(page);
 const cards: { color: CardProps['color']; href: string; text: string }[] = [
 	{
 		color: 'primary',
 		href: 'chat',
-		text: 'Chat'
+		text: m.chat_name()
 	},
 	{
 		color: 'secondary',
 		href: 'scan',
-		text: 'Scan'
+		text: m.scan_name()
 	},
 	{
 		color: 'accent',
 		href: 'cosmetics',
-		text: 'Cosmetics'
+		text: m.cosmetics_name()
 	},
 	{
 		color: 'background',
 		href: 'profile',
-		text: 'Settings'
+		text: m.profile_name()
 	}
 ];
 </script>
@@ -34,8 +35,10 @@ const cards: { color: CardProps['color']; href: string; text: string }[] = [
 <section class="wrapper m-auto flex h-full max-h-[100rem] max-w-[100rem] flex-col gap-4">
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col">
-			<TextLarge>Hi, Emma</TextLarge>
-			<TextBase className="text-light-text-muted font-normal">Good morning!</TextBase>
+			<TextLarge>{m.index_greeting_heading({ name: 'Emma' })}</TextLarge>
+			<TextBase className="text-light-text-muted font-normal"
+				>{m.index_greeting_subheading()}</TextBase
+			>
 		</div>
 		<Avatar src="/images/avatar.png"></Avatar>
 	</div>
@@ -47,11 +50,11 @@ const cards: { color: CardProps['color']; href: string; text: string }[] = [
 						className="inline-block rotate-180"
 						props={{ family: 'palanquin', size: 'xl', weight: 'bold' }}>"</Text
 					>
-					<TextBase>Got questions?</TextBase>
-					<TextBase>Purr-haps I can help!</TextBase>
+					<TextBase>{m.index_hero_heading()}</TextBase>
+					<TextBase>{m.index_hero_subheading()}</TextBase>
 				</div>
 				<ButtonSecondary href="chat">
-					<TextSmall>Start a Chat</TextSmall>
+					<TextSmall>{m.index_hero_button()}</TextSmall>
 				</ButtonSecondary>
 			</div>
 			<img
@@ -64,7 +67,7 @@ const cards: { color: CardProps['color']; href: string; text: string }[] = [
 			<Card
 				onclick={() => {
 					if (href != "#") return;
-					$flash = { type: 'info', message: 'This page is currently under maintenance.' }
+					$flash = { type: 'info', message: m.error_maintenance() }
 				}}
 				className="relative flex-col justify-center items-center gap-2 p-8"
 				props={{ color }}
@@ -72,8 +75,8 @@ const cards: { color: CardProps['color']; href: string; text: string }[] = [
 			>
 				<img
 					class={index == 2 ? 'absolute mb-7 h-[15vw] max-h-16 w-[14vw] max-w-[4.5rem]' : 'h-[12vw] max-h-12'}
-					src="/images/{text.toLowerCase()}.png"
-					alt="chat"
+					src="/images/{href.toLowerCase()}.png"
+					alt={href}
 				/>
 				{#if index == 2}
 					<div class="h-[2.75rem]"></div>

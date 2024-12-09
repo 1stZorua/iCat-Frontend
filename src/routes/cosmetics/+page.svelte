@@ -4,6 +4,7 @@ import { Avatar, Card, Switch } from '$components/shared/other';
 import type { CardProps } from '$components/shared/other/Card/variants';
 import { TextBase, TextSmall } from '$components/shared/text';
 import { fade } from 'svelte/transition';
+import * as m from '$lib/paraglide/messages';
 
 let activeSwitchIndex = $state(0);
 
@@ -18,25 +19,25 @@ const categories: {
 	}[];
 }[] = [
 	{
-		name: 'User',
+		name: m.cosmetics_user(),
 		items: [
 			{
 				color: 'primary',
 				src: 'chat',
-				href: 'cosmetics/chat/background',
-				title: 'Background',
-				description: 'Customize your chat background'
+				href: `cosmetics/chat/${m.cosmetics_href()}`,
+				title: m.cosmetics_heading(),
+				description: m.cosmetics_description()
 			}
 		]
 	},
 	{
-		name: 'iCat',
+		name: m.cosmetics_icat(),
 		items: []
 	}
 ];
 </script>
 
-<PageLayout page="Cosmetics">
+<PageLayout page={m.cosmetics_name}>
 	<Switch
 		items={categories.map((c) => c.name)}
 		changeSwitch={(activeIndex) => activeSwitchIndex = activeIndex}

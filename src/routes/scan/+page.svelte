@@ -8,6 +8,7 @@ import { Avatar, Card, Icon } from '$components/shared/other';
 import { fly } from 'svelte/transition';
 import { captureImageFromCanvas, createFileFromBlob } from '$lib/utils';
 import { onDestroy } from 'svelte';
+import * as m from '$lib/paraglide/messages';
 
 const flash = getFlash(page);
 
@@ -28,8 +29,8 @@ async function startCamera() {
 		elVideo.srcObject = videoStream;
 		elVideo.play();
 	} catch (error) {
-		$flash = { type: 'error', message: 'Unable to access the camera.' };
-		console.error('Error accessing camera: ', error);
+		$flash = { type: 'error', message: m.error_accessing_camera() };
+		console.error(`${m.error_accessing_camera()}: `, error);
 	}
 }
 async function captureScanArea() {
@@ -46,7 +47,7 @@ onDestroy(() => videoStream?.getTracks().forEach((t) => t.stop()));
 <PageLayout
 	parentClassName="h-full"
 	header={{ color: videoStream ? 'accent' : 'primary' }}
-	page="Scan"
+	page={m.scan_name()}
 >
 	<video
 		bind:this={elVideo}
@@ -79,9 +80,9 @@ onDestroy(() => videoStream?.getTracks().forEach((t) => t.stop()));
 				></div>
 			</div>
 			{#if !videoStream}
-				<div class="flex w-full flex-col items-center gap-2">
+				<div class="flex w-[95%] flex-col items-center gap-2">
 					<Icon icon="material-symbols:android-camera"></Icon>
-					<TextMedium>Click to enable camera</TextMedium>
+					<TextMedium>{m.scan_text()}</TextMedium>
 				</div>
 			{/if}
 			<div class="flex w-full justify-between">
@@ -104,7 +105,7 @@ onDestroy(() => videoStream?.getTracks().forEach((t) => t.stop()));
 				></Avatar>
 				<div class="flex flex-col text-light-text-primary">
 					<TextMedium>{exhibition ?? 'Exhibition'}</TextMedium>
-					<TextSmall>Philips museum exhibition</TextSmall>
+					<TextSmall>{m.scan_exhibition()}</TextSmall>
 				</div>
 				<Icon className="text-light-text-primary ml-auto" icon="material-symbols:arrow-forward"
 				></Icon>

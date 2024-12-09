@@ -7,6 +7,7 @@ import Icon from '$components/shared/other/Icon.svelte';
 import { TextBase, TextHeading } from '$components/shared/text';
 import { cn } from '$lib/utils';
 import emblaCarouselSvelte from 'embla-carousel-svelte';
+import * as m from '$lib/paraglide/messages';
 
 let emblaApi: any;
 let age = $state(2);
@@ -29,7 +30,7 @@ const onSelect = () => {
 	{/if}
 {/snippet}
 
-<PageLayout parentClassName="h-full" href="/introduction" page="Create Profile">
+<PageLayout parentClassName="h-full" href="/introduction" page={m.create_name()}>
 	<div class="flex h-full w-full flex-col items-center justify-between gap-8">
 		<div class="my-auto flex h-[22.5rem] w-full flex-col items-center gap-6">
 			<Avatar
@@ -38,7 +39,7 @@ const onSelect = () => {
 				src="/images/icat.png"
 			></Avatar>
 			<div class="flex w-full flex-col gap-2 text-center">
-				<TextHeading>Your Age</TextHeading>
+				<TextHeading>{m.create_heading()}</TextHeading>
 				<div
 					class="embla cursor-grab overflow-hidden"
 					use:emblaCarouselSvelte={{ options: { loop: true, skipSnaps: true, align: 'center', startIndex: 2  }, plugins: [] }}
@@ -65,7 +66,7 @@ const onSelect = () => {
 		<form method="post" action="?/create" class="flex w-full justify-center" use:enhance>
 			<input type="hidden" name="age" value={age + 3} required />
 			<ButtonPrimary className="max-w-52 w-full">
-				<TextBase>Next</TextBase>
+				<TextBase>{m.create_button()}</TextBase>
 			</ButtonPrimary>
 		</form>
 	</div>

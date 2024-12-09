@@ -9,14 +9,14 @@ import { Avatar, Icon, Input } from '$components/shared/other';
 import { TextBase } from '$components/shared/text';
 import type { Message } from '$lib/types/types';
 import { marked } from 'marked';
+import * as m from '$lib/paraglide/messages';
 
 let { form }: { form: { message: Message } } = $props();
 let elForm: HTMLFormElement;
 let messages: Message[] = $state([
 	{
 		role: 'assistant',
-		context:
-			'Hi, Emma. I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?'
+		context: m.chat_message()
 	}
 ]);
 let history: string = $derived(JSON.stringify(messages));
@@ -69,7 +69,7 @@ async function onSubmit() {
 <PageLayout
 	className="mb-[5.5rem] text-light-text-primary"
 	header={{ color: 'accent' }}
-	page="Chat"
+	page={m.chat_name()}
 >
 	<img
 		class="fixed inset-0 -z-10 h-full w-full object-cover"
@@ -112,7 +112,7 @@ async function onSubmit() {
 		action="?/chat"
 		use:enhance
 	>
-		<Input type="text" name="prompt" placeholder="Type something..." required>
+		<Input type="text" name="prompt" placeholder={m.chat_placeholder()} required>
 			<ButtonPrimary className="p-3" disabled={isProcessing}>
 				<Icon
 					className="text-white"

@@ -1,5 +1,6 @@
 import { fail, type RequestEvent } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
+import * as m from '$lib/paraglide/messages';
 
 const MINIMUM_DELAY_MS = 100;
 
@@ -19,7 +20,7 @@ export const actions = {
 			});
 
 			if (!response.ok) {
-				setFlash({ type: 'error', message: 'An error occured while making request.' }, cookies);
+				setFlash({ type: 'error', message: m.error_processing_request() }, cookies);
 				return fail(400);
 			}
 
@@ -32,10 +33,7 @@ export const actions = {
 
 			return { success: true, exhibition: result['predicted_exhibition'] };
 		} catch (error: unknown) {
-			setFlash(
-				{ type: 'error', message: 'An error occured while processing your request.' },
-				cookies
-			);
+			setFlash({ type: 'error', message: m.error_processing_request() }, cookies);
 			console.error(error);
 			return fail(500);
 		}

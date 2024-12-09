@@ -2,6 +2,7 @@ import { fail, type RequestEvent } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { getEmbeddingsFromJina, fetchPineconeResults, sendToOpenAI } from '$lib/utils';
 import type { Message, VectorDBResult } from '$lib/types/types';
+import * as m from '$lib/paraglide/messages';
 
 export const actions = {
 	chat: async ({ request, fetch, cookies, locals }: RequestEvent) => {
@@ -31,11 +32,8 @@ export const actions = {
 				}
 			};
 		} catch (error: unknown) {
-			setFlash(
-				{ type: 'error', message: 'An error occured while processing your request.' },
-				cookies
-			);
-			console.error('Error processing request:', error);
+			setFlash({ type: 'error', message: m.error_processing_request() }, cookies);
+			console.error(`${m.error_processing_request()}:`, error);
 			return fail(500);
 		}
 	}
