@@ -1,3 +1,5 @@
+import type { AvailableLanguageTag } from '$lib/paraglide/runtime';
+
 export type FlashType = 'success' | 'info' | 'warning' | 'error';
 
 export interface Message {
@@ -16,4 +18,10 @@ export interface VectorDBResult {
 		text: string;
 	};
 	score: number;
+}
+
+export interface Language {
+	name: string;
+	lang: AvailableLanguageTag;
+	icon: string;
 }
