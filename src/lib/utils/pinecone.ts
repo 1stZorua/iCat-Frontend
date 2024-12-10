@@ -10,4 +10,6 @@ export async function fetchPineconeResults(
 	});
 
 	return await response.json();
+
+	// Todo: Remove localization from /api/ endpoint e.g. /en-us/api/Pinecone -> /api/Pinecone
 }
