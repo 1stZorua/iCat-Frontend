@@ -80,7 +80,7 @@ onDestroy(() => videoStream?.getTracks().forEach((t) => t.stop()));
 				></div>
 			</div>
 			{#if !videoStream}
-				<div class="flex w-[95%] flex-col items-center gap-2">
+				<div class="flex w-[90%] flex-col items-center gap-2">
 					<Icon icon="material-symbols:android-camera"></Icon>
 					<TextMedium>{m.scan_text()}</TextMedium>
 				</div>
