@@ -37,7 +37,7 @@ const categories: {
 ];
 </script>
 
-<PageLayout page={m.cosmetics_name}>
+<PageLayout page={m.cosmetics_name()}>
 	<Switch
 		items={categories.map((c) => c.name)}
 		changeSwitch={(activeIndex) => activeSwitchIndex = activeIndex}
