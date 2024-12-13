@@ -3,13 +3,13 @@ export async function fetchPineconeResults(
 	queryEmbedding: number[],
 	topK: number
 ) {
+	const body = JSON.stringify({ queryEmbedding, topK });
+
 	const response = await fetch('/api/Pinecone', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ queryEmbedding, topK })
+		body: body
 	});
 
 	return await response.json();
-
-	// Todo: Remove localization from /api/ endpoint e.g. /en-us/api/Pinecone -> /api/Pinecone
 }
