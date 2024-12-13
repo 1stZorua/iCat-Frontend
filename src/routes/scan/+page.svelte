@@ -68,7 +68,7 @@ onDestroy(() => videoStream?.getTracks().forEach((t) => t.stop()));
 		<button
 			bind:this={elScanArea}
 			onclick={videoStream ? captureScanArea : startCamera}
-			class="relative flex h-full w-full flex-col justify-between"
+			class="relative flex h-full w-full flex-col justify-between items-center"
 			aria-label="Scan area"
 		>
 			<div class="flex w-full justify-between">
