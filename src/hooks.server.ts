@@ -14,7 +14,7 @@ export const customHandle: Handle = async ({ event, resolve }) => {
 
 	const requestedLanguage = event.url.pathname.split('/')[1] as string;
 
-	if (language && requestedLanguage !== language.lang) {
+	if (language && requestedLanguage !== language.lang && !event.url.pathname.startsWith('/api/')) {
 		switchToLanguage(event.url.pathname, language?.lang, true);
 	}
 
