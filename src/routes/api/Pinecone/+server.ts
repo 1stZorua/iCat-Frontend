@@ -8,9 +8,8 @@ if (import.meta.env.MODE === 'development') {
 	VITE_PINECONE_API_KEY = process.env.PINECONE_API_KEY as string;
 }
 
-export const POST = async ({ request }) => {
+export const POST = async ({ request }: { request: Request }) => {
 	const { queryEmbedding, topK } = await request.json();
-
 	try {
 		const pc = new Pinecone({
 			apiKey: VITE_PINECONE_API_KEY
