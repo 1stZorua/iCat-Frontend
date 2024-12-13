@@ -4,5 +4,6 @@ import * as runtime from '$lib/paraglide/runtime.js';
 
 export const i18n = createI18n(runtime, {
 	defaultLanguageTag: 'nl-nl',
-	prefixDefaultLanguage: 'always'
+	prefixDefaultLanguage: 'always',
+	exclude: [/^\/api\//]
 });
