@@ -16,24 +16,34 @@
 
 	"chat_name": "Chat",
 	"chat_message": "Hi Emma, I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?",
-	"chat_placeholder": "Type something...",
+	"chat_placeholder": "Ask a question...",
 
 	"scan_name": "Scan",
 	"scan_text": "Click to enable camera",
 	"scan_exhibition": "Philips Museum Exhibition",
 
+	"quiz_name": "Quiz",
+	"quiz_button": "Answer",
+	"quiz_error_selection": "Please select an answer before submitting.",
+	"quiz_error_empty": "There are currently no quizzes available.",
+	"quiz_correct_answer": "Well done! You've answered the quiz correctly.",
+	"quiz_wrong_answer": "Oops! That's not the correct answer.",
+
 	"cosmetics_name": "Cosmetics",
 	"cosmetics_user": "User",
 	"cosmetics_icat": "iCat",
-	"cosmetics_href": "background",
-	"cosmetics_heading": "Background",
-	"cosmetics_description": "Customize your background",
 	"cosmetics_selected": "Selected",
 	"cosmetics_owned": "Owned",
+	"cosmetics_background_href": "background",
+	"cosmetics_background_heading": "Background",
+	"cosmetics_background_description": "Customize your background",
+	"cosmetics_icat_href": "#",
+	"cosmetics_icat_heading": "Coming Soon",
+	"cosmetics_icat_description": "There are currently no cosmetics available.",
 
 	"profile_name": "Settings",
 	"profile_page": "Profile",
-	"profile_join_date": "Member since January 2025",
+	"profile_join_date": "Member since {date}",
 
 	"profile_correct_answers": "Correct Answers",
 	"profile_total_coins": "Total Coins",
@@ -49,7 +59,13 @@
 	"profile_language_dutch": "Dutch",
 	"profile_language_english": "English",
 
+	"profile_preferences_name": "Preferences",
+	"profile_preferences_description": "Configure and adjust app settings.",
+	"profile_preferences_camera_name": "Camera",
+	"profile_preferences_camera_description": "Allow the app to enable your camera.",
+
 	"error_accessing_camera": "Unable to access the camera.",
+	"error_enabling_tts": "Text-to-Speech (TTS) functionality is not supported in this browser.",
 	"error_processing_request": "An error occured while processing your request.",
 	"error_maintenance": "This page is currently under maintenance."
 }

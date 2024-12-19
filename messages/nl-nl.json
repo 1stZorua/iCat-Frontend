@@ -16,27 +16,37 @@
 
 	"chat_name": "Chat",
 	"chat_message": "Hallo Emma, ik ben iCat en ik kan je helpen met vragen over je museumbezoek. Is er iets wat ik voor je kan doen?",
-	"chat_placeholder": "Typ iets...",
+	"chat_placeholder": "Stel een vraag...",
 
 	"scan_name": "Scan",
 	"scan_text": "Tik om de camera in te schakelen",
 	"scan_exhibition": "Philips Museum Tentoonstelling",
 
+	"quiz_name": "Quiz",
+	"quiz_button": "Antwoord",
+	"quiz_error_selection": "Selecteer een antwoord voordat je verdergaat.",
+	"quiz_error_empty": "Er zijn momenteel geen quizzen beschikbaar.",
+	"quiz_correct_answer": "Goed gedaan! Je hebt de quiz correct beantwoord.",
+	"quiz_wrong_answer": "Oeps! Dat is niet het juiste antwoord.",
+
 	"cosmetics_name": "Cosmetica",
 	"cosmetics_user": "Gebruiker",
 	"cosmetics_icat": "iCat",
-	"cosmetics_href": "achtergrond",
-	"cosmetics_heading": "Achtergrond",
-	"cosmetics_description": "Pas je achtergrond aan",
 	"cosmetics_selected": "Actief",
 	"cosmetics_owned": "In Bezit",
+	"cosmetics_background_href": "achtergrond",
+	"cosmetics_background_heading": "Achtergrond",
+	"cosmetics_background_description": "Pas je achtergrond aan.",
+	"cosmetics_icat_href": "#",
+	"cosmetics_icat_heading": "Binnenkort Beschikbaar",
+	"cosmetics_icat_description": "Er zijn momenteel geen cosmetica.",
 
 	"profile_name": "Instellingen",
 	"profile_page": "Profiel",
-	"profile_join_date": "Lid sinds Januari 2025",
+	"profile_join_date": "Lid sinds {date}",
 
 	"profile_correct_answers": "Juiste antwoorden",
-	"profile_total_coins": "Totaal aanal munten",
+	"profile_total_coins": "Totaal aantal munten",
 
 	"profile_personal": "Persoonlijk",
 	"profile_general": "Algemeen",
@@ -49,7 +59,13 @@
 	"profile_language_dutch": "Nederlands",
 	"profile_language_english": "Engels",
 
+	"profile_preferences_name": "Voorkeuren",
+	"profile_preferences_description": "Configureer de app-instellingen.",
+	"profile_preferences_camera_name": "Camera",
+	"profile_preferences_camera_description": "Geef de app toegang tot je camera.",
+
 	"error_accessing_camera": "Kan de camera niet openen.",
+	"error_enabling_tts": "Tekst-naar-spraak (TTS) functionaliteit wordt niet ondersteund in deze browser.",
 	"error_processing_request": "Er is een fout opgetreden bij het verwerken van je verzoek.",
 	"error_maintenance": "Deze pagina is momenteel in onderhoud."
 }
