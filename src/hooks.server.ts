@@ -13,6 +13,8 @@ export const customHandle: Handle = async ({ event, resolve }) => {
 		: undefined;
 
 	const requestedLanguage = event.url.pathname.split('/')[1] as string;
+	const cameraPreference = event.cookies.get('camera') as unknown as boolean;
+	const joinedDate = event.cookies.get('joinedDate') as string;
 
 	if (language && requestedLanguage !== language.lang && !event.url.pathname.startsWith('/api/')) {
 		switchToLanguage(event.url.pathname, language?.lang, true);
@@ -23,7 +25,11 @@ export const customHandle: Handle = async ({ event, resolve }) => {
 		cosmetics: {
 			selectedBackground: selectedBackground ? parseInt(selectedBackground, 10) : 0
 		},
-		language: language
+		language: language,
+		preferences: {
+			camera: cameraPreference
+		},
+		joinedDate: joinedDate
 	};
 
 	return await resolve(event);
