@@ -16,6 +16,10 @@ export default {
 							bg: '#FFFFFF',
 							fg: '#9192FE'
 						},
+						disabled: {
+							bg: '#7C7C7C ',
+							fg: '#FFFFFF'
+						},
 						text: {
 							bg: '',
 							fg: ''
@@ -84,6 +88,22 @@ export default {
 			md: { max: '768px' },
 			lg: { max: '1024px' },
 			xl: { max: '1280px' }
+		},
+		keyframes: {
+			scanSlide: {
+				to: {
+					transform: 'translateY(-100%)',
+					top: '100%'
+				}
+			},
+			scanPulse: {
+				'33%': { clipPath: 'inset(-100px 0 0)' },
+				'50%': { clipPath: 'inset(0 0 0 0)' },
+				'83%': { clipPath: 'inset(0 0 -100px 0)' }
+			}
+		},
+		animation: {
+			scan: 'scanSlide 1.5s ease-in-out infinite alternate, scanPulse 3s ease-in-out infinite'
 		}
 	},
 	plugins: []
