@@ -30,7 +30,7 @@ let {
 		<ButtonAction href={href} className="absolute top-1/2 -translate-y-1/2">
 			<Icon icon="lucide:chevron-left"></Icon>
 		</ButtonAction>
-		<TextLarge className={`mx-auto h-12 flex items-center text-light-text-${header.color}`}
+		<TextLarge className="mx-auto h-12 flex items-center text-light-text-{header.color}"
 			>{page}</TextLarge
 		>
 	</div>
