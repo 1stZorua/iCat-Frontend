@@ -6,6 +6,8 @@ export interface Message {
 	role: 'user' | 'assistant';
 	context: string;
 	typedText?: string;
+	tts?: boolean;
+	clipboard?: boolean;
 }
 
 export interface VectorDBResult {
@@ -20,8 +22,39 @@ export interface VectorDBResult {
 	score: number;
 }
 
+export interface ResponseFormat {
+	type: 'json_schema';
+	json_schema: {
+		name: string;
+		strict: boolean;
+		schema: {
+			type: string;
+			properties: Record<string, unknown>;
+			required: string[];
+			additionalProperties: boolean;
+		};
+	};
+}
+
 export interface Language {
 	name: string;
 	lang: AvailableLanguageTag;
 	icon: string;
+}
+
+export interface Preference {
+	state: string;
+	name: string;
+	description: string;
+}
+
+export interface Quiz {
+	question: string;
+	answers: {
+		A: string;
+		B: string;
+		C: string;
+		D: string;
+	};
+	correctAnswer: 'A' | 'B' | 'C' | 'D';
 }
