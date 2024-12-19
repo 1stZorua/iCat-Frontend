@@ -24,6 +24,6 @@ export const POST = async ({ request }: { request: Request }) => {
 
 		return new Response(JSON.stringify({ matches: result.matches }));
 	} catch (error: unknown) {
-		console.error('Error processing request:', error);
+		console.error(error);
 	}
 };
