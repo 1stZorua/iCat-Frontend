@@ -16,6 +16,8 @@ declare global {
 					selectedBackground: number;
 				};
 				language: Language | undefined;
+				preferences: Record<string, boolean>;
+				joinedDate: string;
 			};
 		}
 		interface PageData {
@@ -26,6 +28,8 @@ declare global {
 					selectedBackground: number;
 				};
 				language: Language | undefined;
+				preferences: Record<string, boolean>;
+				joinedDate: string;
 			};
 		}
 		// interface PageState {}
