@@ -40,7 +40,7 @@ const cards: { color: CardProps['color']; href: string; text: string }[] = [
 				>{m.index_greeting_subheading()}</TextBase
 			>
 		</div>
-		<Avatar src="/images/avatar.png"></Avatar>
+		<Avatar href="profile" src="/images/avatar.png"></Avatar>
 	</div>
 	<div class="grid h-full w-full grid-cols-2 gap-4 rounded-lg">
 		<Card className="relative p-4 col-span-2">
