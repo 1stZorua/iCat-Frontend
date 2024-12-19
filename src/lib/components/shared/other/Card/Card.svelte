@@ -12,7 +12,7 @@ interface Props extends HTMLAnchorAttributes {
 	children?: Snippet;
 }
 
-let { className, href = '', props, children, ...rest }: Props = $props();
+let { className, href, props, children, ...rest }: Props = $props();
 </script>
 
 {#if href}
