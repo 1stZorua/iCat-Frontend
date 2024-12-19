@@ -3,6 +3,7 @@ import { setFlash } from 'sveltekit-flash-message/server';
 import { getEmbeddingsFromJina, fetchPineconeResults, sendToOpenAI } from '$lib/utils';
 import type { Message, VectorDBResult } from '$lib/types/types';
 import * as m from '$lib/paraglide/messages';
+import { markdownInstruction } from '$lib/instructions/markdown.js';
 
 export const actions = {
 	chat: async ({ request, fetch, cookies, locals }: RequestEvent) => {
@@ -17,23 +18,24 @@ export const actions = {
 				(match: VectorDBResult) => match.metadata.text
 			);
 
-			const userInstruction = `
-			### **AI Instruction**
+			const instruction = markdownInstruction.replaceAll(
+				'{userAge}',
+				(locals.user.age as number).toString()
+			);
 
-			Adjust your tone and language complexity to ensure the user, who is ${locals.user.age} years old, can understand your responses clearly and easily.
-			`;
-			const responseMessage = await sendToOpenAI(prompt, contextTexts, history, userInstruction);
+			const responseMessage = await sendToOpenAI(instruction, prompt, contextTexts, history);
 
 			return {
 				success: true,
 				message: {
 					role: 'assistant',
 					context: responseMessage
-				}
+				},
+				state: 'talking'
 			};
 		} catch (error: unknown) {
 			setFlash({ type: 'error', message: m.error_processing_request() }, cookies);
-			console.error(`${m.error_processing_request()}:`, error);
+			console.error(error);
 			return fail(500);
 		}
 	}
