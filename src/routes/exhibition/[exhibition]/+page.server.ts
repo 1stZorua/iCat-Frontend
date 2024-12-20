@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ fetch, locals, params }) => {
 
 	const generateQuiz = async () => {
 		const queryEmbedding = await getEmbeddingsFromJina(prompt);
-		const vectorDBResults = await fetchPineconeResults(fetch, queryEmbedding, 16);
+		const vectorDBResults = await fetchPineconeResults(fetch, queryEmbedding, 1);
 		const contextTexts = vectorDBResults.matches.map(
 			(match: VectorDBResult) => match.metadata.text
 		);
