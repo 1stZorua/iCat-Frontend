@@ -47,7 +47,7 @@ let selectedLanguage = $state($page.data.user?.language);
 				<div
 					class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-sm bg-light-background-secondary"
 				>
-					<Icon icon={`emojione-v1:flag-for-${lang.icon}`}></Icon>
+					<Icon icon="emojione-v1:flag-for-{lang.icon}"></Icon>
 				</div>
 				<div class="flex flex-col items-start text-light-text-primary">
 					<TextBase>{lang.name}</TextBase>
