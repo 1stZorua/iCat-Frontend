@@ -16,11 +16,25 @@ const icon = $derived($page.data.user?.language?.icon);
 		<div
 			class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-sm bg-light-background-secondary"
 		>
-			<Icon icon={`emojione-v1:flag-for-${icon}`}></Icon>
+			<Icon icon="emojione-v1:flag-for-{icon}"></Icon>
 		</div>
 		<div class="flex flex-col text-light-text-primary">
 			<TextBase>{m.profile_language_name()}</TextBase>
 			<TextSmall className="text-light-text-muted">{m.profile_language_description()}</TextSmall>
+		</div>
+	</Card>
+	<Card
+		href="general/preferences"
+		className="rounded-md bg-light-background-primary flex items-center gap-3"
+	>
+		<div
+			class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-sm bg-light-background-secondary"
+		>
+			<Icon icon="flat-color-icons:settings"></Icon>
+		</div>
+		<div class="flex flex-col text-light-text-primary">
+			<TextBase>{m.profile_preferences_name()}</TextBase>
+			<TextSmall className="text-light-text-muted">{m.profile_preferences_description()}</TextSmall>
 		</div>
 	</Card>
 </PageLayout>
