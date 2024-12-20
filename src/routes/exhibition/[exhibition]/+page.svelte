@@ -26,7 +26,6 @@ let isCorrect: boolean = $derived(JSON.parse((form?.correct as unknown as string
 	{:then data}
 		<TextBase>{data.question}</TextBase>
 		<form
-			bind:this={formRef}
 			class="flex h-full flex-col"
 			method="POST"
 			action="?/answer"
