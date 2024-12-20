@@ -14,15 +14,10 @@ export const actions = {
 		const startTime = Date.now();
 
 		try {
-			const response = await fetch('https://3x2qz5hm-5000.euw.devtunnels.ms/predict', {
+			const response = await fetch('https://dss3lpmv-5000.euw.devtunnels.ms/predict', {
 				method: 'POST',
 				body: data
 			});
-
-			if (!response.ok) {
-				setFlash({ type: 'error', message: m.error_processing_request() }, cookies);
-				return fail(400);
-			}
 
 			const result = await response.json();
 			const elapsedTime = Date.now() - startTime;
@@ -35,7 +30,7 @@ export const actions = {
 		} catch (error: unknown) {
 			setFlash({ type: 'error', message: m.error_processing_request() }, cookies);
 			console.error(error);
-			return fail(500);
+			return;
 		}
 	}
 };
