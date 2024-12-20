@@ -8,8 +8,12 @@ export const actions = {
 		const age: string = data.get('age') as string;
 		const language: Language = { lang: 'nl-nl', name: 'Nederlands', icon: 'netherlands' };
 
+		const now = new Date();
+		const joinedDate = now.toISOString();
+
 		cookies.set('age', age, { path: '/', httpOnly: true });
 		cookies.set('language', JSON.stringify(language), { path: '/', httpOnly: true });
+		cookies.set('joinedDate', joinedDate, { path: '/', httpOnly: true });
 		throw redirect(303, '/');
 	}
 };
