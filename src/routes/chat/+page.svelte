@@ -96,14 +96,14 @@ onMount(() => {
 
 <svelte:window onbeforeunload={stopTTS} />
 
-{#snippet message(msg: Message)}
+{#snippet message(msg: Message, src: string = 'icat')}
 	{@const isBot = msg.role === 'assistant'}
 	<div class="flex gap-2 {isBot ? '' : 'justify-end'}">
 		{#if isBot}
 			<Avatar
 				className="flex-shrink-0 justify-center items-end bg-light-cards-neutral-bg"
 				imageClassName="h-5/6"
-				src="/images/icat.png"
+				src="/images/{src}.png"
 			></Avatar>
 		{/if}
 		{#if msg.context}
@@ -175,7 +175,7 @@ onMount(() => {
 	{/each}
 	{#if chatState === 'processing'}
 		<div in:fade>
-			{@render message({ role: 'assistant', context: ''})}
+			{@render message({ role: 'assistant', context: ''}, 'icat_thinking')}
 		</div>
 	{/if}
 	<form
