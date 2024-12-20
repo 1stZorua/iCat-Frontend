@@ -3,7 +3,6 @@
 @import 'tailwindcss/utilities';
 
 @layer base {
-
 	/* Baloo2 */
 	/* ExtraBold */
 	@font-face {
@@ -95,8 +94,8 @@
 		font-style: normal;
 	}
 
-	*:not(.toaster) ,
-	*::before:not(.toaster) ,
+	*:not(.toaster),
+	*::before:not(.toaster),
 	*::after:not(.toaster) {
 		box-sizing: border-box;
 		margin: 0;

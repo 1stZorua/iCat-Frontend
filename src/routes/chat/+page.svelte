@@ -1,39 +1,41 @@
 <script lang="ts">
-import { untrack } from 'svelte';
+import { onMount, untrack } from 'svelte';
 import { enhance } from '$app/forms';
+import { page } from '$app/stores';
+import { getFlash } from 'sveltekit-flash-message';
 import { fade } from 'svelte/transition';
 import { PageLayout } from '$components/page';
-import { ButtonPrimary } from '$components/shared/buttons';
+import { ButtonPrimary, ButtonText } from '$components/shared/buttons';
 import { Avatar, Icon, Input } from '$components/shared/other';
 import { TextBase } from '$components/shared/text';
 import type { Message } from '$lib/types/types';
+import { copyToClipboard, initTTS, TTS } from '$lib/utils';
+import { getVoices, stopTTS } from '$lib/utils/tts';
+import * as m from '$lib/paraglide/messages';
 import { marked } from 'marked';
 
-let { form }: { form: { message: Message, context: Array<string[]> } } = $props();
-let elForm: HTMLFormElement;
+const flash = getFlash(page);
+
+let { form }: { form: { message: Message; state: 'idle' | 'processing' | 'talking' } } = $props();
+let formRef: HTMLFormElement;
+
+let tts: { initialized: boolean; voices: SpeechSynthesisVoice[] } = $state({
+	initialized: false,
+	voices: []
+});
+
 let messages: Message[] = $state([
 	{
 		role: 'assistant',
-		context: 'Hi, Emma. I am iCat and I can help you with any questions regarding your museum visit. Is there something I can do for you?'
+		context: m.chat_message()
 	}
 ]);
+
+let prompt: string = $state('');
+let chatState: 'idle' | 'processing' | 'talking' = $state('idle');
 let history: string = $derived(JSON.stringify(messages));
-let context: string = $derived(JSON.stringify(form?.context || []));
 let lastMessage: Message | null = null;
-let isProcessing: boolean = $state(false);
-
-$effect(() => {
-	if (form?.message && form.message !== lastMessage) {
-		messages = [...messages, form.message];
-		lastMessage = form.message;
-	}
-
-	if (messages.length > 1) {
-		untrack(async () => {
-			await typeMessage(messages.length - 1);
-		});
-	}
-});
+let background: number | undefined = $page.data.user?.cosmetics.selectedBackground;
 
 async function typeMessage(index: number) {
 	const message = messages[index];
@@ -48,68 +50,158 @@ async function typeMessage(index: number) {
 		await new Promise((resolve) => setTimeout(resolve, 20));
 	}
 
-	isProcessing = false;
+	chatState = 'idle';
 }
 
 async function onSubmit() {
-	const elPrompt = elForm.querySelector('input');
+	const elInput = formRef.querySelector('input[name="input"]') as HTMLInputElement;
+	if (!elInput || chatState !== 'idle') return;
 
-	if (!elPrompt || isProcessing) return;
+	prompt = elInput.value as string;
+	elInput.value = '';
 
-	const userMessage: Message = { role: 'user', context: elPrompt.value as string };
-	// elPrompt.value = '';
-
-	messages = [...messages, userMessage];
-	isProcessing = true;
+	messages = [...messages, { role: 'user', context: prompt }];
+	chatState = 'processing';
 }
+
+$effect(() => {
+	if (form?.message && form.message !== lastMessage) {
+		messages = [...messages, form.message];
+		lastMessage = form.message;
+		chatState = form.state;
+	}
+
+	if (messages.length > 1) {
+		untrack(async () => {
+			await typeMessage(messages.length - 1);
+		});
+	}
+});
+
+onMount(() => {
+	const initializeTTS = async () => {
+		tts.initialized = await initTTS();
+		if (!tts.initialized) return;
+		const lang = ($page.data.user?.language?.lang as string).replace(
+			/^([a-z]+)-([a-z]+)$/,
+			(_, p1, p2) => `${p1}-${p2.toUpperCase()}`
+		);
+		tts.voices = getVoices(lang);
+	};
+
+	initializeTTS();
+	return () => stopTTS();
+});
 </script>
 
-<PageLayout className="mb-[5.5rem]" page="Chat">
-	<div class={`flex gap-2`}>
-		<Avatar
-			className="flex-shrink-0 justify-center items-end bg-light-cards-neutral-bg"
-			imageClassName="h-5/6"
-			src="/images/icat.png"
-		></Avatar>
-		<TextBase className="font-normal p-3 rounded-md bg-light-background-secondary"
-			>{messages[0].context}</TextBase
-		>
-	</div>
-	
-	{#each messages.slice(1) as msg}
-		{@const isBot = msg.role == 'assistant'}
-		<div in:fade class={`flex gap-2 ${isBot ? '' : 'justify-end'}`}>
-			{#if isBot}
-				<Avatar
-					className="flex-shrink-0 justify-center items-end bg-light-cards-neutral-bg"
-					imageClassName="h-5/6"
-					src="/images/icat.png"
-				></Avatar>
-			{/if}
-			<TextBase
-				className={`font-normal p-3 rounded-md ${isBot ? 'bg-light-background-secondary' : 'bg-light-cards-neutral-bg text-white'}`}
-				>{@html marked.parse(msg?.typedText  ?? '' as string)}</TextBase
+<svelte:window onbeforeunload={stopTTS} />
+
+{#snippet message(msg: Message)}
+	{@const isBot = msg.role === 'assistant'}
+	<div class="flex gap-2 {isBot ? '' : 'justify-end'}">
+		{#if isBot}
+			<Avatar
+				className="flex-shrink-0 justify-center items-end bg-light-cards-neutral-bg"
+				imageClassName="h-5/6"
+				src="/images/icat.png"
+			></Avatar>
+		{/if}
+		{#if msg.context}
+			<div
+				class="flex flex-col gap-2 rounded-md p-3 {isBot ? 'bg-light-background-secondary' : 'bg-light-cards-neutral-bg text-white'}"
 			>
+				<TextBase className="font-normal rounded-md">
+					{@html marked.parse(msg?.typedText?.replace(/\n/g, '<br>') ?? msg.context as string)}
+				</TextBase>
+				{#if (isBot && msg.context === msg.typedText) || msg.typedText === undefined}
+					<div in:fade class="flex gap-1">
+						{#if tts.initialized}
+							<ButtonText
+								onclick={async() => {
+								if (!tts.initialized) {
+									$flash = { type: 'error', message: m.error_enabling_tts() }
+									return;
+								}
+
+								msg.tts = !msg.tts;
+								await TTS(msg.context, { voice: tts.voices[0], end: () => msg.tts = false });
+						}}
+								className="p-1 transition-colors rounded-sm hover:bg-light-background-tertiary hover:bg-opacity-5"
+								><Icon
+									className="text-md text-light-text-muted"
+									icon={!msg.tts ? 'lucide:volume-1' : 'lucide:volume-2'}
+								></Icon></ButtonText
+							>
+						{/if}
+						<ButtonText
+							onclick={async() => {
+								await copyToClipboard(msg.context);
+								msg.clipboard = true;
+								await new Promise(resolve => setTimeout(resolve, 2000));
+								msg.clipboard = false;
+							}}
+							className="p-1 transition-colors rounded-sm hover:bg-light-background-tertiary hover:bg-opacity-5"
+						>
+							<Icon
+								className="text-md text-light-text-muted"
+								icon={msg.clipboard ? 'lucide:check' : 'lucide:copy'}
+							></Icon>
+						</ButtonText>
+					</div>
+				{/if}
+			</div>
+		{:else}
+			<Icon className="text-light-cards-neutral-bg self-center" icon="svg-spinners:3-dots-fade"
+			></Icon>
+		{/if}
+	</div>
+{/snippet}
+
+<PageLayout
+	className="mb-[5.5rem] text-light-text-primary"
+	header={{ color: background === 0 ? 'primary' : 'accent' }}
+	page={m.chat_name()}
+>
+	<img
+		class="fixed inset-0 -z-10 h-full w-full object-cover"
+		src="/images/cosmetics/background_{background}.svg"
+		alt="background"
+	/>
+	{@render message(messages[0])}
+	{#each messages.slice(1) as msg}
+		<div in:fade>
+			{@render message(msg)}
 		</div>
 	{/each}
+	{#if chatState === 'processing'}
+		<div in:fade>
+			{@render message({ role: 'assistant', context: ''})}
+		</div>
+	{/if}
 	<form
 		onsubmit={onSubmit}
 		enctype="multipart/form-data"
-		bind:this={elForm}
+		bind:this={formRef}
 		class="wrapper fixed bottom-0 left-0 flex w-full justify-center pb-4"
 		method="POST"
 		action="?/chat"
 		use:enhance
 	>
-		<Input type="text" name="prompt" placeholder="Type something..." required>
-			<ButtonPrimary className="p-3" disabled={isProcessing}>
+		<Input
+			className="items-center"
+			type="text"
+			name="input"
+			placeholder={m.chat_placeholder()}
+			required
+		>
+			<ButtonPrimary className="p-3" disabled={chatState !== 'idle'}>
 				<Icon
-					className="text-white"
-					icon={isProcessing ? 'svg-spinners:90-ring-with-bg' : 'lucide:send'}
+					className="text-light-text-accent"
+					icon={chatState !== 'idle' ? 'svg-spinners:90-ring-with-bg' : 'mynaui:send-solid'}
 				></Icon>
 			</ButtonPrimary>
 		</Input>
+		<input type="hidden" name="prompt" value={prompt} />
 		<input type="hidden" name="history" value={history} />
-		<input type="hidden" name="context" value={context} />
 	</form>
 </PageLayout>

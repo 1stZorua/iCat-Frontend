@@ -1,13 +1,15 @@
 <script lang="ts">
+import { ParaglideJS } from '@inlang/paraglide-sveltekit';
+import { i18n } from '$lib/i18n';
 import { page } from '$app/stores';
 import type { Snippet } from 'svelte';
 import type { FlashType } from '$lib/types/types';
-import { getFlash } from 'sveltekit-flash-message/client';
+import { initFlash } from 'sveltekit-flash-message/client';
 import { Toaster, toast } from 'svelte-sonner';
 import 'iconify-icon';
 import '../app.css';
 
-const flash = getFlash(page);
+const flash = initFlash(page);
 
 const toastMap: Record<FlashType, (message: string) => void> = {
 	success: toast.success,
@@ -25,6 +27,8 @@ $effect(() => {
 let { children }: { children?: Snippet } = $props();
 </script>
 
-<Toaster position="top-center" richColors />
+<ParaglideJS i18n={i18n}>
+	<Toaster position="top-center" richColors />
 
-{@render children?.()}
+	{@render children?.()}
+</ParaglideJS>
