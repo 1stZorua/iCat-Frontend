@@ -2,7 +2,7 @@ import { fail, type RequestEvent } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import * as m from '$lib/paraglide/messages';
 
-const MINIMUM_DELAY_MS = 100;
+const MINIMUM_DELAY_MS = 300;
 
 export const actions = {
 	scan: async ({ request, cookies }: RequestEvent) => {
@@ -14,7 +14,7 @@ export const actions = {
 		const startTime = Date.now();
 
 		try {
-			const response = await fetch('https://klp4cbg3-5000.euw.devtunnels.ms/predict', {
+			const response = await fetch('https://3x2qz5hm-5000.euw.devtunnels.ms/predict', {
 				method: 'POST',
 				body: data
 			});
@@ -31,7 +31,7 @@ export const actions = {
 				await new Promise((resolve) => setTimeout(resolve, MINIMUM_DELAY_MS - elapsedTime));
 			}
 
-			return { success: true, exhibition: result['predicted_exhibition'] };
+			return { success: true, exhibition: result['predicted_exhibition'], scanning: false };
 		} catch (error: unknown) {
 			setFlash({ type: 'error', message: m.error_processing_request() }, cookies);
 			console.error(error);
