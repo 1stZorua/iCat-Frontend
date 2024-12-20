@@ -1,10 +1,46 @@
 <script lang="ts">
+import { page } from '$app/stores';
 import { enhance } from '$app/forms';
 import { PageLayout } from '$components/page';
+import { getFlash } from 'sveltekit-flash-message';
 import { ButtonAction, ButtonText } from '$components/shared/buttons';
 import { Avatar, Card, Icon } from '$components/shared/other';
 import { TextBase, TextHeading, TextLarge, TextSmall } from '$components/shared/text';
 import * as m from '$lib/paraglide/messages';
+import { formatDate } from '$lib/utils';
+
+const flash = getFlash(page);
+const items: { text: string; icon: string; color: string; href: string }[] = [
+	{
+		text: m.profile_personal(),
+		icon: 'mingcute:shield-shape-fill',
+		color: 'text-light-cards-neutral-bg',
+		href: ''
+	},
+	{
+		text: m.profile_general(),
+		icon: 'material-symbols:settings',
+		color: 'text-light-cards-primary-bg',
+		href: 'profile/general'
+	},
+	{
+		text: m.profile_help(),
+		icon: 'material-symbols:help',
+		color: 'text-light-cards-secondary-bg',
+		href: ''
+	},
+	{
+		text: m.profile_contact(),
+		icon: 'material-symbols:call',
+		color: 'text-light-cards-accent-bg',
+		href: ''
+	}
+];
+
+const formattedDate = formatDate(
+	$page.data.user?.joinedDate as string,
+	$page.data.user?.language?.lang as string
+);
 </script>
 
 <PageLayout page={m.profile_page()}>
@@ -21,7 +57,9 @@ import * as m from '$lib/paraglide/messages';
 		</div>
 		<div class="flex flex-col text-center">
 			<TextLarge className="font-semibold">Emma</TextLarge>
-			<TextBase className="text-light-text-muted font-normal">{m.profile_join_date()}</TextBase>
+			<TextBase className="text-light-text-muted font-normal"
+				>{m.profile_join_date({ date: formattedDate})}</TextBase
+			>
 		</div>
 	</div>
 	<div class="flex w-full gap-4">
@@ -41,27 +79,20 @@ import * as m from '$lib/paraglide/messages';
 		</Card>
 	</div>
 	<div class="w-full rounded-md bg-light-background-secondary">
-		<ButtonText className="flex items-center w-full gap-4 p-4">
-			<Icon className="text-md text-light-cards-neutral-bg" icon="mingcute:shield-shape-fill"
-			></Icon>
-			<TextBase>{m.profile_personal()}</TextBase>
-			<Icon className="text-md ml-auto" icon="lucide:chevron-right"></Icon>
-		</ButtonText>
-		<ButtonText href="profile/general" className="flex items-center w-full gap-4 p-4">
-			<Icon className="text-md text-light-cards-primary-bg" icon="material-symbols:settings"></Icon>
-			<TextBase>{m.profile_general()}</TextBase>
-			<Icon className="text-md ml-auto" icon="lucide:chevron-right"></Icon>
-		</ButtonText>
-		<ButtonText className="flex items-center w-full gap-4 p-4">
-			<Icon className="text-md text-light-cards-secondary-bg" icon="material-symbols:help"></Icon>
-			<TextBase>{m.profile_help()}</TextBase>
-			<Icon className="text-md ml-auto" icon="lucide:chevron-right"></Icon>
-		</ButtonText>
-		<ButtonText className="flex items-center w-full gap-4 p-4">
-			<Icon className="text-md text-light-cards-accent-bg" icon="material-symbols:call"></Icon>
-			<TextBase>{m.profile_contact()}</TextBase>
-			<Icon className="text-md ml-auto" icon="lucide:chevron-right"></Icon>
-		</ButtonText>
+		{#each items as { text, icon, color, href }}
+			<ButtonText
+				onclick={() => {
+					if (href) return;
+					$flash = { type: 'info', message: m.error_maintenance()}
+				}}
+				href={href}
+				className="flex items-center w-full gap-4 p-4"
+			>
+				<Icon className="text-md {color}" icon={icon}></Icon>
+				<TextBase>{text}</TextBase>
+				<Icon className="text-md ml-auto" icon="lucide:chevron-right"></Icon>
+			</ButtonText>
+		{/each}
 		<form action="?/logout" method="post" use:enhance>
 			<ButtonText className="flex items-center w-full gap-4 p-4">
 				<Icon
