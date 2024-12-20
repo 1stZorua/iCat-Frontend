@@ -20,13 +20,15 @@ let selectedIndex = $state($page.data.user?.cosmetics.selectedBackground);
 		use:enhance
 	>
 		<input type="hidden" name="id" value={selectedIndex} />
-		{#each Array(5) as _, index}
+		{#each Array(6) as _, index}
 			{@const isSelected = selectedIndex === index}
 			<ButtonText
 				onclick={() => selectedIndex = index}
 				className="flex-col items-center gap-4 max-w-max"
 			>
-				<div class="relative overflow-hidden rounded-full">
+				<div
+					class="relative overflow-hidden rounded-full border-2 border-light-background-secondary"
+				>
 					<img
 						class="h-20 w-20 object-cover"
 						src="/images/cosmetics/background_{index}.svg"
