@@ -2,7 +2,7 @@
 import { PageLayout } from '$components/page';
 import { page } from '$app/stores';
 import { TextBase } from '$components/shared/text';
-import { Card } from '$components/shared/other';
+import { Card, Icon } from '$components/shared/other';
 import { ButtonPrimary } from '$components/shared/buttons';
 import type { Quiz } from '$lib/types/types';
 import { goto } from '$app/navigation';
@@ -22,7 +22,9 @@ let isCorrect: boolean = $derived(JSON.parse((form?.correct as unknown as string
 
 <PageLayout parentClassName="h-full" className="justify-between" href="/scan" page={m.quiz_name()}>
 	{#await data.quiz}
-		<TextBase>Loading</TextBase>
+		<div class="flex items-center justify-center h-full">
+			<Icon icon="svg-spinners:90-ring-with-bg"></Icon>
+		</div>
 	{:then data}
 		<TextBase>{data.question}</TextBase>
 		<form
