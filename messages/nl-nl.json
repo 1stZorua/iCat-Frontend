@@ -21,6 +21,7 @@
 	"scan_name": "Scan",
 	"scan_text": "Tik om de camera in te schakelen",
 	"scan_exhibition": "Philips Museum Tentoonstelling",
+	"scan_exhibition_error": "Kon niet worden geïdentificeerd.",
 	"scan_try_again": "De tentoonstelling kon niet worden geïdentificeerd. Probeer het opnieuw.",
 
 	"quiz_name": "Quiz",

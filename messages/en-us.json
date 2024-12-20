@@ -21,6 +21,7 @@
 	"scan_name": "Scan",
 	"scan_text": "Click to enable camera",
 	"scan_exhibition": "Philips Museum Exhibition",
+	"scan_exhibition_error": "Couldn't be identified.",
 	"scan_try_again": "The exhibition couldn't be identified. Please try scanning again.",
 
 	"quiz_name": "Quiz",
