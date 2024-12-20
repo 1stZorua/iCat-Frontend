@@ -126,11 +126,12 @@
 			</button>
 		</form>
 		{#if exhibition}
+			{@const unknown = exhibition.toLowerCase() === 'try again!'}
 			<div class="wrapper absolute bottom-0 left-0 w-full" transition:fly={{ y: 100, duration: 300 }}>
 				<Card
 					onclick={(e: Event) => {
 						e.preventDefault();
-						if (exhibition.toLowerCase() === 'try again!') {
+						if (unknown) {
 							$flash = { type: 'error', message: m.scan_try_again() };
 							return;
 						}
@@ -146,7 +147,7 @@
 					></Avatar>
 					<div class="flex w-[70%] flex-col overflow-hidden text-light-text-primary text-left">
 						<TextMedium className="w-full overflow-hidden text-ellipsis">{toProperCase([exhibition])}</TextMedium>
-						<TextSmall>{m.scan_exhibition()}</TextSmall>
+						<TextSmall>{unknown ? m.scan_exhibition_error() : m.scan_exhibition()}</TextSmall>
 					</div>
 					<Icon
 						className="text-light-text-primary absolute right-3"
