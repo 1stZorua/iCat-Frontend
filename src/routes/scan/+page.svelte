@@ -6,7 +6,7 @@ import { PageLayout } from '$components/page';
 import { TextMedium, TextSmall } from '$components/shared/text';
 import { Avatar, Card, Icon } from '$components/shared/other';
 import { fade, fly } from 'svelte/transition';
-import { captureImageFromCanvas, createFileFromBlob } from '$lib/utils';
+import { captureImageFromCanvas, createFileFromBlob, toProperCase } from '$lib/utils';
 import { onMount } from 'svelte';
 import * as m from '$lib/paraglide/messages';
 
@@ -136,7 +136,7 @@ onMount(() => {
 					src="/images/icat.png"
 				></Avatar>
 				<div class="flex w-[70%] flex-col overflow-hidden text-light-text-primary">
-					<TextMedium className="w-full overflow-hidden text-ellipsis">{exhibition}</TextMedium>
+					<TextMedium className="w-full overflow-hidden text-ellipsis">{toProperCase([exhibition])}</TextMedium>
 					<TextSmall>{m.scan_exhibition()}</TextSmall>
 				</div>
 				<Icon
