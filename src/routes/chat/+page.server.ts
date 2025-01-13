@@ -15,14 +15,14 @@ export const actions = {
 			const queryEmbedding = await getEmbeddingsFromJina(prompt);
 			const vectorDBResults = await fetchPineconeResults(fetch, queryEmbedding, 1);
 			const contextTexts = vectorDBResults.matches.map(
-				(match: VectorDBResult) => `${match.metadata.text}. This file was retrieved from folder locations: ${match.metadata.location}. This can give an idea of where the exhibition is located in the museum. `
+				(match: VectorDBResult) =>
+					`${match.metadata.text}. This file was retrieved from folder locations: ${match.metadata.location}. This can give an idea of where the exhibition is located in the museum.`
 			);
 
 			const instruction = markdownInstruction.replaceAll(
 				'{userAge}',
 				(locals.user.age as number).toString()
 			);
-
 			const responseMessage = await sendToOpenAI(instruction, prompt, contextTexts, history);
 
 			return {
