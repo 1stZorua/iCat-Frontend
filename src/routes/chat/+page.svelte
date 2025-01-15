@@ -8,7 +8,7 @@ import { PageLayout } from '$components/page';
 import { ButtonPrimary, ButtonText } from '$components/shared/buttons';
 import { Avatar, Icon, Input } from '$components/shared/other';
 import { TextBase } from '$components/shared/text';
-import type { Message } from '$lib/types/types';
+import type { Message, Sentiment } from '$lib/types/types';
 import { copyToClipboard, initTTS, TTS } from '$lib/utils';
 import { getVoices, stopTTS } from '$lib/utils/tts';
 import * as m from '$lib/paraglide/messages';
@@ -45,8 +45,20 @@ async function typeMessage(index: number) {
 		return;
 	}
 
+	const emotions = message.emotions;
+	let emotionIndex = 0;
+	message.activeEmotion = emotions?.[emotionIndex];
+	let currentSegmentEnd = emotions?.[emotionIndex]?.segment.length || 0;
+
 	for (let i = 0; i <= message.context.length; i++) {
 		message.typedText = message.context.slice(0, i);
+
+		if (i >= currentSegmentEnd && emotions?.[emotionIndex]) {
+			emotionIndex++;
+			message.activeEmotion = emotions[emotionIndex];
+			currentSegmentEnd += emotions[emotionIndex]?.segment.length || message.context.length;
+		}
+
 		await new Promise((resolve) => setTimeout(resolve, 20));
 	}
 
@@ -96,14 +108,14 @@ onMount(() => {
 
 <svelte:window onbeforeunload={stopTTS} />
 
-{#snippet message(msg: Message, src: string = 'icat')}
+{#snippet message(msg: Message, src: Sentiment | undefined = undefined)}
 	{@const isBot = msg.role === 'assistant'}
 	<div class="flex gap-2 {isBot ? '' : 'justify-end'}">
 		{#if isBot}
 			<Avatar
 				className="flex-shrink-0 justify-center items-end bg-light-cards-neutral-bg"
 				imageClassName="h-5/6"
-				src="/images/{src}.png"
+				src="/images/icat/{(src ? src : msg.activeEmotion?.sentiment ?? 'happy').toLowerCase()}.png"
 			></Avatar>
 		{/if}
 		{#if msg.context}
@@ -175,7 +187,7 @@ onMount(() => {
 	{/each}
 	{#if chatState === 'processing'}
 		<div in:fade>
-			{@render message({ role: 'assistant', context: ''}, 'icat_thinking')}
+			{@render message({ role: 'assistant', context: ''}, 'Thinking')}
 		</div>
 	{/if}
 	<form

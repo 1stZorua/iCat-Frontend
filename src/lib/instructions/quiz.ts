@@ -1,13 +1,13 @@
 import type { ResponseFormat } from '$lib/types/types';
 
 export const quizInstruction: string = `
-Your task is to create a quiz question based on the exhibition titled {exhibition} and the available information from this exhibition. Please refer to the RAG vector database to ensure the information is accurate and relevant. The quiz should include:
+### **Instruction for AI**
 
-1. A single, clear question related to the exhibition.
-2. Exactly **four** possible answers (A, B, C, D).
-3. One correct answer randomly assigned to one of the answers: A, B, C, or D.
+Create a quiz question based on the exhibition titled {exhibition}. Please refer to the RAG vector database to ensure the information is accurate and relevant. Follow these rules:
 
-Do not include any additional text or formatting.
+1. Write one clear and concise question about the exhibition in {language}.
+2. Provide exactly **four** possible answers: A, B, C, and D, all written in {language}.
+3. Randomly assign the correct answer to one of the options (A, B, C, or D).
 `;
 
 export const quizResponseFormat: ResponseFormat = {

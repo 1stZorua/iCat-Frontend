@@ -2,9 +2,18 @@ import type { AvailableLanguageTag } from '$lib/paraglide/runtime';
 
 export type FlashType = 'success' | 'info' | 'warning' | 'error';
 
+export type Sentiment = 'Neutral' | 'Thinking' | 'Happy' | 'Angry' | 'Surprised';
+
+export interface Emotion {
+	segment: string;
+	sentiment: Sentiment;
+}
+
 export interface Message {
 	role: 'user' | 'assistant';
 	context: string;
+	emotions?: Emotion[];
+	activeEmotion?: Emotion;
 	typedText?: string;
 	tts?: boolean;
 	clipboard?: boolean;
