@@ -1,9 +1,14 @@
 import { fail, type RequestEvent } from '@sveltejs/kit';
 import { setFlash } from 'sveltekit-flash-message/server';
 import { getEmbeddingsFromJina, fetchPineconeResults, sendToOpenAI } from '$lib/utils';
-import type { Message, VectorDBResult } from '$lib/types/types';
+import type { Emotion, Message, VectorDBResult } from '$lib/types/types';
 import * as m from '$lib/paraglide/messages';
 import { markdownInstruction } from '$lib/instructions/markdown.js';
+import {
+	emotionInstruction,
+	emotionQuery,
+	emotionResponseFormat
+} from '$lib/instructions/emotion.js';
 
 export const actions = {
 	chat: async ({ request, fetch, cookies, locals }: RequestEvent) => {
@@ -25,11 +30,22 @@ export const actions = {
 			);
 			const responseMessage = await sendToOpenAI(instruction, prompt, contextTexts, history);
 
+			const emotions: { emotions: Emotion[] } = JSON.parse(
+				(await sendToOpenAI(
+					emotionInstruction,
+					emotionQuery,
+					responseMessage ? [[responseMessage]] : [],
+					[],
+					emotionResponseFormat
+				)) as string
+			);
+
 			return {
 				success: true,
 				message: {
 					role: 'assistant',
-					context: responseMessage
+					context: responseMessage,
+					emotions: emotions['emotions']
 				},
 				state: 'talking'
 			};
