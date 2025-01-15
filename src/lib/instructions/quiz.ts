@@ -5,8 +5,8 @@ export const quizInstruction: string = `
 
 Create a quiz question based on the exhibition titled {exhibition}. Please refer to the RAG vector database to ensure the information is accurate and relevant. Follow these rules:
 
-1. Write one clear and concise question about the exhibition.
-2. Provide exactly **four** possible answers: A, B, C, and D.
+1. Write one clear and concise question about the exhibition in {language}.
+2. Provide exactly **four** possible answers: A, B, C, and D, all written in {language}.
 3. Randomly assign the correct answer to one of the options (A, B, C, or D).
 `;
 
