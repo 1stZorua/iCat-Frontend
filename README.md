@@ -2,6 +2,10 @@
 
 iCat is an interactive application designed for the Philips Museum. It allows visitors to chat with iCat, scan exhibitions, and answer questions to earn cosmetics.
 
+## Figma Design
+
+The design of iCat prioritizes a clean and intuitive interface. For detailed design elements and prototypes, please refer to the [Figma design](https://www.figma.com/design/mFjReu2wh6NmKH00q719ra/ICat?node-id=0-1&t=qg04wpLNwEOkdugm-1).
+
 ## Packages
 
 - **clsx**
