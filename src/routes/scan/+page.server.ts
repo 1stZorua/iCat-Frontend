@@ -14,7 +14,7 @@ export const actions = {
 		const startTime = Date.now();
 
 		try {
-			const response = await fetch('https://48n3zlng-5000.euw.devtunnels.ms/predict', {
+			const response = await fetch('https://dss3lpmv-5000.euw.devtunnels.ms/predict', {
 				method: 'POST',
 				body: data
 			});

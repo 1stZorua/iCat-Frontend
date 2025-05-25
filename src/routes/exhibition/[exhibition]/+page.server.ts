@@ -9,6 +9,7 @@ export const load: PageServerLoad = async ({ fetch, locals, params }) => {
 	const exhibition = params.exhibition;
 	const language = locals.user.language?.name as string;
 	const prompt = `Create a quiz question about ${exhibition} that is appropriate for someone aged ${locals.user.age}. The question should be challenging, but not too difficult for their age group.`;
+
 	const instruction = quizInstruction
 		.replaceAll('{exhibition}', exhibition)
 		.replaceAll('{language}', language);
